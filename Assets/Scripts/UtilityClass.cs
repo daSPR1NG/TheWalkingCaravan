@@ -159,6 +159,11 @@ public static class UtilityClass
         else ThrowErrorMessage("State Manager not found !", navMeshAgent.transform);
     }
 
+    public static void SetAgentStoppingDistance(NavMeshAgent navMeshAgent, float newStoppingDistanceValue)
+    {
+        navMeshAgent.stoppingDistance = newStoppingDistanceValue;
+    }
+
     public static void ResetAgentDestination(NavMeshAgent navMeshAgent)
     {
         if (navMeshAgent.hasPath)

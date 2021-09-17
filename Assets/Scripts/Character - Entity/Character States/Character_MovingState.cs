@@ -18,7 +18,7 @@ public class Character_MovingState : BasicState
 
     public override void ProcessState(StateManager stateManager)
     {
-        CursorDetection cursorDetection = stateManager.GetComponent<CursorDetection>();
+        InteractionHandler cursorDetection = stateManager.GetComponent<InteractionHandler>();
         Character_MovementHandler character_MovementHandler = stateManager.GetComponent<Character_MovementHandler>();
 
         if (character_MovementHandler.DirectionToMove == Vector3.zero && !cursorDetection.HasATarget)

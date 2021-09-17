@@ -56,8 +56,8 @@ namespace Khynan_Survival
 
             if (DirectionToMove != Vector3.zero)
             {
-                CursorDetection cursorDetection = GetComponent<CursorDetection>();
-                if (cursorDetection.TargetDetected != null) cursorDetection.ResetInteractionDatas();
+                InteractionHandler interactionHandler = GetComponent<InteractionHandler>();
+                if (interactionHandler.TargetDetected != null) interactionHandler.ResetInteractionDatas();
 
                 UtilityClass.ResetAgentDestination(NavMeshAgent);
 
