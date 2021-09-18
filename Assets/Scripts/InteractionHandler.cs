@@ -4,6 +4,12 @@ using UnityEngine.AI;
 
 public class InteractionHandler : MonoBehaviour
 {
+    public delegate void InteractionEventHandler(float interactionDuration, string interactionName);
+    public static event InteractionEventHandler OnInteraction;
+
+    public delegate void EndOfInteractionEventHandler();
+    public static event EndOfInteractionEventHandler OnEndOfInteraction;
+
     [Header("DETECTION PARAMETERS")]
     public LayerMask EntityLayer;
     public Transform TargetDetected;
@@ -77,6 +83,7 @@ public class InteractionHandler : MonoBehaviour
             collectableRessource.Interaction(transform);
 
             //Call UI Event and set the informations - Display
+            OnInteraction?.Invoke(collectableRessource.collectionDuration, collectableRessource.interactionName);
 
             isInteracting = true;
         }
@@ -91,6 +98,7 @@ public class InteractionHandler : MonoBehaviour
             isInteracting = false;
 
             //Call UI Event and set the informations - Hide
+            OnEndOfInteraction?.Invoke();
         }
     }
 }

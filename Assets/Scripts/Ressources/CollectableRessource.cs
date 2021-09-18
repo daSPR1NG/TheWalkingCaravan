@@ -7,11 +7,12 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     [Header("INTERACTION SETTINGS")]
     public Transform interactingObject;
     public float minimumDistanceToInteract = 1.25f;
+    public string interactionName = "[Type HERE]";
 
     [Header("RESSOURCE SETTINGS")]
     public RessourceType ressourceType = RessourceType.Unassigned;
     public float ressourceAmount = 1000f;
-    public float collectingTimerValue = 5f;
+    public float collectionDuration = 5f;
 
     #region Components
     private Outline OutlineComponent => GetComponent<Outline>();
@@ -35,10 +36,13 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
 
     IEnumerator InteractionCoroutine()
     {
-        yield return new WaitForSeconds(collectingTimerValue / 2);
+        float midCollectionDuration = collectionDuration / 2;
+
+        yield return new WaitUntil(()=> collectionDuration == midCollectionDuration);
+        Debug.Log("collectionDuration == collectionDuration /2");
         //Change the sprite to a damaged one to see the advancement.
 
-        yield return new WaitForSeconds(collectingTimerValue);
+        yield return new WaitForSeconds(collectionDuration);
 
         if (!interactingObject) yield break;
 
