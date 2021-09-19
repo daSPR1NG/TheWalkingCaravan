@@ -22,7 +22,22 @@ public class Ressource
 
     [Header("VALUES")]
     public float startingValue = 0f;
-    public float currentValue;
+    private float currentValue;
+    public float CurrentValue { 
+        get => currentValue; 
+        set
+        {
+            if (value <= 0)
+            {
+                currentValue = 0;
+            }
+            else if (maxValue != 0 && value >= maxValue) 
+            {
+                currentValue = maxValue;
+            }
+            else currentValue = value;
+        }
+    }
     public float maxValue;
 
     [Space]
@@ -42,26 +57,21 @@ public class Ressource
 
     public void AddToCurrentValue(float valueToAdd)
     {
-        currentValue += valueToAdd;
+        if (CurrentValue == 0 && maxValue != 0 && CurrentValue >= maxValue) return;
 
-        if (maxValue != 0 && currentValue >= maxValue)
-        {
-            currentValue = maxValue;
-        }
+        CurrentValue += valueToAdd;
 
         OnRessourceValueChanged?.Invoke(ressourceType);
-
+        RessourcesHandler.Instance.TriggerUIFeedbackOnRessourceCollection(ressourceType);
     }
 
     public void RemoveToCurrentValue(float valueToRemove)
     {
-        currentValue -= valueToRemove;
+        if (CurrentValue == 0) return;
 
-        if (currentValue <= 0)
-        {
-            currentValue = 0;
-        }
+        CurrentValue -= valueToRemove;
 
         OnRessourceValueChanged?.Invoke(ressourceType);
+        RessourcesHandler.Instance.TriggerUIFeedbackOnRessourceCollection(ressourceType);
     }
 }

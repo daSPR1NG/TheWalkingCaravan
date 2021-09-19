@@ -6,7 +6,7 @@ public class RessourcesHandler : MonoBehaviour
     [Header("OVERTIME INCOME SETTINGS")]
     public bool usesOvertimeIncome = false;
     public float overtimeIncome = 5f;
-    public float overtimeDelay = 0.15f;
+    public float overtimeDelay = 1f;
 
     [Header("RESSOURCES")]
     public List<Ressource> characterRessources;
@@ -45,7 +45,7 @@ public class RessourcesHandler : MonoBehaviour
     {
         InstanciateRessourcesUICompartment();
 
-        if (usesOvertimeIncome) InvokeRepeating(nameof(IncreaseRessourcesOvertime), overtimeDelay, 1);
+        if (usesOvertimeIncome) InvokeRepeating(nameof(IncreaseRessourcesOvertime), 1, overtimeDelay);
     }
 
     private void Update()
@@ -83,7 +83,7 @@ public class RessourcesHandler : MonoBehaviour
         {
             if (thisRessourceUI.ressourceType == ressourceType)
             {
-                thisRessourceUI.UpdateRessourceValue(GetThisRessource(ressourceType).currentValue);
+                thisRessourceUI.UpdateRessourceValue(GetThisRessource(ressourceType).CurrentValue);
             }
         }
     }
@@ -105,7 +105,18 @@ public class RessourcesHandler : MonoBehaviour
 
             RessourceUI ressourceUI = prefab.GetComponent<RessourceUI>();
             ressourceUIs.Add(ressourceUI);
-            ressourceUI.SetThisUI(characterRessources[ i ].ressourceType, characterRessources [ i ].currentValue, characterRessources [ i ].ressourceIcon);
+            ressourceUI.SetThisUI(characterRessources[ i ].ressourceType, characterRessources [ i ].CurrentValue, characterRessources [ i ].ressourceIcon);
+        }
+    }
+
+    public void TriggerUIFeedbackOnRessourceCollection(RessourceType wantedRessourceType)
+    {
+        for (int i = 0; i < ressourceUIs.Count; i++)
+        {
+            if (ressourceUIs[i].ressourceType == wantedRessourceType)
+            {
+                ressourceUIs [ i ].PlayFeedbackAnimation();
+            }
         }
     }
     #endregion
@@ -139,7 +150,7 @@ public class RessourcesHandler : MonoBehaviour
         for (int i = 0; i < characterRessources.Count; i++)
         {
             characterRessources [ i ].ressourceName = characterRessources [ i ].ressourceType.ToString();
-            characterRessources [ i ].currentValue = characterRessources [ i ].startingValue;
+            characterRessources [ i ].CurrentValue = characterRessources [ i ].startingValue;
         }
 
         instanceValue = System.Enum.GetValues(typeof(RessourceType)).Length - 1;

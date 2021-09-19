@@ -55,16 +55,11 @@ public class CursorHandler : MonoBehaviour
     private void Start()
     {
         SetCursorAppearance(CursorType.Default);
-        if (cursorIsConfined) Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void LateUpdate()
     {
         UpdateCursorAppearance();
-
-        //Debug
-        if (cursorIsConfined) Cursor.lockState = CursorLockMode.Confined;
-        else if (!cursorIsConfined) Cursor.lockState = CursorLockMode.None;
     }
 
     public void SetCursorAppearance(CursorType cursorType)

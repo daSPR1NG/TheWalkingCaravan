@@ -37,9 +37,6 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     IEnumerator InteractionCoroutine()
     {
         float midCollectionDuration = collectionDuration / 2;
-
-        yield return new WaitUntil(()=> collectionDuration == midCollectionDuration);
-        Debug.Log("collectionDuration == collectionDuration /2");
         //Change the sprite to a damaged one to see the advancement.
 
         yield return new WaitForSeconds(collectionDuration);
@@ -47,6 +44,7 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
         if (!interactingObject) yield break;
 
         interactingObject.GetComponent<RessourcesHandler>().GetThisRessource(ressourceType).AddToCurrentValue(ressourceAmount);
+        interactingObject.GetComponent<RessourcesHandler>().TriggerUIFeedbackOnRessourceCollection(ressourceType);
 
         //Call Destruction Animation or change the sprite.
         //Play the SFX.

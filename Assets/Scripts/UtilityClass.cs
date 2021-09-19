@@ -143,6 +143,11 @@ public static class UtilityClass
 
         return hitPointPos;
     }
+
+    public static void SetCursorLockMode(CursorLockMode lockMode)
+    {
+        Cursor.lockState = lockMode;
+    }
     #endregion
 
     #region NavMeshAgent
@@ -171,6 +176,15 @@ public static class UtilityClass
             navMeshAgent.path.ClearCorners();
             navMeshAgent.ResetPath();
         }
+    }
+    #endregion
+
+    #region Animation
+    public static bool IsAnimationPlaying(Animator animatorComponent, string animationName)
+    {
+        if (animatorComponent.GetCurrentAnimatorStateInfo(0).IsName(animationName)) return true;
+
+        return false;
     }
     #endregion
 }
