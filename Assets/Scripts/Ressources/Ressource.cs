@@ -42,7 +42,7 @@ public class Ressource
 
     [Space]
 
-    [Header("UI SETTINGS")]
+    [Header("UI")]
     public Sprite ressourceIcon;
 
     public delegate void RessourceValueHandler(RessourceType ressourceType);

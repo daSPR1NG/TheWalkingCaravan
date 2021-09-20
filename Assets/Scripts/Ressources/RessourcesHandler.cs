@@ -9,7 +9,7 @@ public class RessourcesHandler : MonoBehaviour
     public float overtimeDelay = 1f;
 
     [Header("RESSOURCES")]
-    public List<Ressource> characterRessources;
+    [SerializeField] private List<Ressource> characterRessources;
     
     [Header("UI COMPONENTS")]
     public Transform ressourcesParentLayout;

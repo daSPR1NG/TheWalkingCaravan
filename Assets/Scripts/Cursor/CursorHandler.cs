@@ -7,6 +7,7 @@ public enum CursorType
     Default,
     Enemy,
     Ressource,
+    Building,
 }
 
 [System.Serializable]
