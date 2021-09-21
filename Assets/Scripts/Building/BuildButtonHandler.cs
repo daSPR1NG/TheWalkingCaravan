@@ -15,16 +15,14 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
     public Image buildingIconImage;
     Color color = Color.white;
 
-    //ADD THE UI FEEDBACK BY CHECKING IF RESSOURCES ARE ENOUGH TO BUILD THE BUILDING USED BY THIS BUTTON
-
     private void OnEnable()
     {
-        //SubscribeRessourceEvent();
+        SubscribeRessourceEvent();
     }
 
     private void OnDisable()
     {
-        //UnsubscribeRessourceEvent();
+        UnsubscribeRessourceEvent();
     }
 
     private void Start()
