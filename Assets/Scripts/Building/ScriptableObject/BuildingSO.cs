@@ -8,7 +8,15 @@ public class BuildingSO : ScriptableObject
     public string buildingName;
     public Sprite buildingIcon;
     public GameObject buildingPrefab;
-    public List<Ressource> neededRessourcesToBuild;
+    public List<NeededRessourcesDatas> neededRessourcesToBuild;
+
+    [System.Serializable]
+    public class NeededRessourcesDatas
+    {
+        public string ressourceName = "[TYPE HERE]";
+        public RessourceType ressourceType = RessourceType.Unassigned;
+        public float neededRessourceValue = 0f;
+    }
 
     #region Editor
     private void OnValidate()

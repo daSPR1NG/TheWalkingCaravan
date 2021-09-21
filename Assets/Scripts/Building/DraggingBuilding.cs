@@ -33,7 +33,7 @@ public class DraggingBuilding : MonoBehaviour
         }
         else if (UtilityClass.LeftClickIsPressed())
         {
-            //ValidateBuilding();
+            ValidateBuilding();
         }
     }
 
@@ -48,15 +48,13 @@ public class DraggingBuilding : MonoBehaviour
         {
             buildingPrefab.transform.position = new Vector3 (hit.point.x, 0, hit.point.z);
         }
-
-        //buildingPrefab.transform.position = UtilityClass.GetCursorClickedPosition(LayerMask.NameToLayer("Ground"));
     }
 
     private void ValidateBuilding()
     {
-        if (CheckIfBuildingCanBeBuiltHere())
+        if (buildingPrefab && CheckIfBuildingCanBeBuiltHere())
         {
-            Instantiate(buildingPrefab, transform.position, buildingPrefab.transform.rotation);
+            Instantiate(buildingPrefab, buildingPrefab.transform.position, buildingPrefab.transform.rotation);
             CancelBuilding();
         }
     }

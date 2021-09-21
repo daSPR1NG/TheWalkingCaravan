@@ -46,7 +46,7 @@ public class Ressource
         CurrentValue += valueToAdd;
 
         OnRessourceValueChanged?.Invoke(ressourceType);
-        RessourcesHandler.Instance.TriggerUIFeedbackOnRessourceCollection(ressourceType);
+        RessourcesHandler.Instance.TriggerUIFeedbackOnRessourceCollectionOrLoss(ressourceType);
     }
 
     public void RemoveToCurrentValue(float valueToRemove)
@@ -56,6 +56,6 @@ public class Ressource
         CurrentValue -= valueToRemove;
 
         OnRessourceValueChanged?.Invoke(ressourceType);
-        RessourcesHandler.Instance.TriggerUIFeedbackOnRessourceCollection(ressourceType);
+        RessourcesHandler.Instance.TriggerUIFeedbackOnRessourceCollectionOrLoss(ressourceType);
     }
 }

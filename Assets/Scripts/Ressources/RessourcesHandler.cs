@@ -112,7 +112,7 @@ public class RessourcesHandler : MonoBehaviour
         }
     }
 
-    public void TriggerUIFeedbackOnRessourceCollection(RessourceType wantedRessourceType)
+    public void TriggerUIFeedbackOnRessourceCollectionOrLoss(RessourceType wantedRessourceType)
     {
         for (int i = 0; i < ressourceUIs.Count; i++)
         {

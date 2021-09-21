@@ -44,7 +44,7 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
         if (!interactingObject) yield break;
 
         interactingObject.GetComponent<RessourcesHandler>().GetThisRessource(ressourceType).AddToCurrentValue(ressourceAmount);
-        interactingObject.GetComponent<RessourcesHandler>().TriggerUIFeedbackOnRessourceCollection(ressourceType);
+        interactingObject.GetComponent<RessourcesHandler>().TriggerUIFeedbackOnRessourceCollectionOrLoss(ressourceType);
 
         //Call Destruction Animation or change the sprite.
         //Play the SFX.

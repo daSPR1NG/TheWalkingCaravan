@@ -17,6 +17,16 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     //ADD THE UI FEEDBACK BY CHECKING IF RESSOURCES ARE ENOUGH TO BUILD THE BUILDING USED BY THIS BUTTON
 
+    private void OnEnable()
+    {
+        //SubscribeRessourceEvent();
+    }
+
+    private void OnDisable()
+    {
+        //UnsubscribeRessourceEvent();
+    }
+
     private void Start()
     {
         buildingIconImage.sprite = associatedBuilding.buildingIcon;
@@ -30,6 +40,45 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
         buildingInstance = Instantiate(associatedBuilding.buildingPrefab, UtilityClass.GetCursorClickedPosition(LayerMask.NameToLayer("Ground")), associatedBuilding.buildingPrefab.transform.rotation);
     }
 
+    private void CheckIfTheBuildingCanBeBuilt(RessourceType neededRessourceType)
+    {
+        if (associatedBuilding.neededRessourcesToBuild.Count == 0) return;
+
+        for (int i = 0; i < RessourcesHandler.Instance.characterRessources.Count; i++)
+        {
+            if (associatedBuilding.neededRessourcesToBuild [ i ].ressourceType == RessourcesHandler.Instance.characterRessources[ i ].ressourceType)
+            {
+                if (associatedBuilding.neededRessourcesToBuild [ i ].neededRessourceValue >= RessourcesHandler.Instance.characterRessources [ i ].CurrentValue)
+                {
+                    Debug.Log("Can be built");
+                }
+                else
+                {
+                    Debug.Log("Cannot be built");
+                }
+            }
+        }
+    }
+
+    #region Event
+    public void SubscribeRessourceEvent()
+    {
+        foreach (Ressource thisRessource in RessourcesHandler.Instance.characterRessources)
+        {
+            thisRessource.OnRessourceValueChanged += CheckIfTheBuildingCanBeBuilt;
+        }
+    }
+
+    public void UnsubscribeRessourceEvent()
+    {
+        foreach (Ressource thisRessource in RessourcesHandler.Instance.characterRessources)
+        {
+            thisRessource.OnRessourceValueChanged -= CheckIfTheBuildingCanBeBuilt;
+        }
+    }
+    #endregion
+
+    #region UI Event - Pointer
     public void OnPointerEnter(PointerEventData eventData)
     {
         Debug.Log("OnPointerEnter");
@@ -53,4 +102,5 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
 
         DraggingBuilding.Instance.SetBuildingPrefab(buildingInstance);
     }
+    #endregion
 }

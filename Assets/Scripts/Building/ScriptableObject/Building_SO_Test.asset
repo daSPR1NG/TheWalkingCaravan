@@ -15,4 +15,10 @@ MonoBehaviour:
   buildingName: Test
   buildingIcon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
   buildingPrefab: {fileID: 2950356716077931954, guid: 777a2d4aa730ac94c939e4a4736f2e69, type: 3}
-  neededRessourcesToBuild: []
+  neededRessourcesToBuild:
+  - ressourceName: Wood
+    ressourceType: 1
+    neededRessourceValue: 100
+  - ressourceName: Minerals
+    ressourceType: 2
+    neededRessourceValue: 120
