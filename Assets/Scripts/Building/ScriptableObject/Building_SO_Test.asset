@@ -10,19 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e5e960972180c84b8dbf09d15eddd70, type: 3}
-  m_Name: Building_Test
+  m_Name: Building_SO_Test
   m_EditorClassIdentifier: 
   buildingName: Test
   buildingIcon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
-  ObjectToBuild: {fileID: 2950356716077931954, guid: 9808b5eca57a4a64a9bab3542e288165, type: 3}
-  needRessourcesToBuild:
-  - ressourceName: Wood
-    ressourceType: 1
-    startingValue: 0
-    maxValue: 0
-    ressourceIcon: {fileID: 0}
-  - ressourceName: Food
-    ressourceType: 3
-    startingValue: 0
-    maxValue: 0
-    ressourceIcon: {fileID: 0}
+  buildingPrefab: {fileID: 2950356716077931954, guid: 777a2d4aa730ac94c939e4a4736f2e69, type: 3}
+  neededRessourcesToBuild: []

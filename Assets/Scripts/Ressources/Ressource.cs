@@ -1,15 +1,4 @@
 using UnityEngine;
-using UnityEditor;
-
-public enum RessourceType
-{
-    Unassigned,
-    Wood,
-    Minerals,
-    Food,
-    Herbs,
-    Leather,
-}
 
 [System.Serializable]
 public class Ressource
@@ -39,11 +28,6 @@ public class Ressource
         }
     }
     public float maxValue;
-
-    [Space]
-
-    [Header("UI")]
-    public Sprite ressourceIcon;
 
     public delegate void RessourceValueHandler(RessourceType ressourceType);
     public event RessourceValueHandler OnRessourceValueChanged;

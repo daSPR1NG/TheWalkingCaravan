@@ -9,7 +9,7 @@ public class RessourcesHandler : MonoBehaviour
     public float overtimeDelay = 1f;
 
     [Header("RESSOURCES")]
-    [SerializeField] private List<Ressource> characterRessources;
+    public List<Ressource> characterRessources;
     
     [Header("UI COMPONENTS")]
     public Transform ressourcesParentLayout;
@@ -105,7 +105,10 @@ public class RessourcesHandler : MonoBehaviour
 
             RessourceUI ressourceUI = prefab.GetComponent<RessourceUI>();
             ressourceUIs.Add(ressourceUI);
-            ressourceUI.SetThisUI(characterRessources[ i ].ressourceType, characterRessources [ i ].CurrentValue, characterRessources [ i ].ressourceIcon);
+            ressourceUI.SetThisUI(
+                characterRessources[ i ].ressourceType, 
+                characterRessources [ i ].CurrentValue, 
+                RessourceComponentManager.Instance.GetRessourceIcon(characterRessources [ i ].ressourceType));
         }
     }
 

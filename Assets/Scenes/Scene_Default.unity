@@ -418,7 +418,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773973, y: 1}
+    m_SensorSize: {x: 1.7775176, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2592,27 +2592,22 @@ MonoBehaviour:
     ressourceType: 1
     startingValue: 0
     maxValue: 0
-    ressourceIcon: {fileID: 21300000, guid: cc967cacdeb34c94b996ad4d98f81c91, type: 3}
   - ressourceName: Minerals
     ressourceType: 2
     startingValue: 0
     maxValue: 0
-    ressourceIcon: {fileID: 21300000, guid: e61e72f425c56b646979a0c8fc85f16f, type: 3}
   - ressourceName: Food
     ressourceType: 3
     startingValue: 0
     maxValue: 0
-    ressourceIcon: {fileID: 21300000, guid: b6db370f972803343a7012126c134618, type: 3}
   - ressourceName: Herbs
     ressourceType: 4
     startingValue: 0
     maxValue: 0
-    ressourceIcon: {fileID: 21300000, guid: cb090d8b1a09d424892f5a9bc496c89d, type: 3}
   - ressourceName: Leather
     ressourceType: 5
     startingValue: 0
     maxValue: 0
-    ressourceIcon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   ressourcesParentLayout: {fileID: 27930167}
   instanceValue: 5
   ressourceUICompartment: {fileID: 766967305736487307, guid: be4e602689e691348b6a60003f29e303, type: 3}
@@ -3454,6 +3449,66 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &984166089
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 984166091}
+  - component: {fileID: 984166090}
+  m_Layer: 0
+  m_Name: Ressource Component Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &984166090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984166089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 359cbe443d9c7954baacc4d0b254f8bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ressourceTypeIndicator: 5
+  ressourceComponents:
+  - ressourceName: Wood
+    ressourceType: 1
+    ressourceIcon: {fileID: 21300000, guid: cc967cacdeb34c94b996ad4d98f81c91, type: 3}
+  - ressourceName: Minerals
+    ressourceType: 2
+    ressourceIcon: {fileID: 21300000, guid: e61e72f425c56b646979a0c8fc85f16f, type: 3}
+  - ressourceName: Food
+    ressourceType: 3
+    ressourceIcon: {fileID: 21300000, guid: b6db370f972803343a7012126c134618, type: 3}
+  - ressourceName: Herbs
+    ressourceType: 4
+    ressourceIcon: {fileID: 21300000, guid: cb090d8b1a09d424892f5a9bc496c89d, type: 3}
+  - ressourceName: Leather
+    ressourceType: 5
+    ressourceIcon: {fileID: 21300000, guid: 8265fc231e88c4141ba226adbe6d4aa1, type: 3}
+--- !u!4 &984166091
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984166089}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1004714749
 GameObject:
   m_ObjectHideFlags: 0
@@ -4266,7 +4321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5927,6 +5982,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1598314989}
   - component: {fileID: 1598314990}
+  - component: {fileID: 1598314991}
   m_Layer: 2
   m_Name: Player Cursor
   m_TagString: Untagged
@@ -5999,6 +6055,22 @@ MonoBehaviour:
   frameRate: 0.25
   cursorIsConfined: 0
   cursorIsLocked: 0
+--- !u!114 &1598314991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598314988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bb454f8a16ec0429b0392cc6fde3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingPrefab: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1614332192
 GameObject:
   m_ObjectHideFlags: 0
