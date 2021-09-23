@@ -556,7 +556,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.778481, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1387,7 +1387,7 @@ GameObject:
   - component: {fileID: 361790352}
   - component: {fileID: 361790353}
   m_Layer: 5
-  m_Name: Buildings
+  m_Name: Building buttons holder - needed in Ressources Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2431,17 +2431,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0340274d6f7d44d854e51f6c3394bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usesOvertimeIncome: 1
+  usesOvertimeIncome: 0
   overtimeIncome: 15
   overtimeDelay: 1
   characterRessources:
   - ressourceName: Wood
     ressourceType: 1
-    startingValue: 0
+    startingValue: 100
     maxValue: 0
   - ressourceName: Minerals
     ressourceType: 2
-    startingValue: 0
+    startingValue: 120
     maxValue: 0
   - ressourceName: Food
     ressourceType: 3
@@ -2458,6 +2458,7 @@ MonoBehaviour:
   ressourcesParentLayout: {fileID: 27930167}
   instanceValue: 5
   ressourceUICompartment: {fileID: 766967305736487307, guid: be4e602689e691348b6a60003f29e303, type: 3}
+  buildingButtonsHolder: {fileID: 361790352}
 --- !u!1 &730821244
 GameObject:
   m_ObjectHideFlags: 0
@@ -5849,7 +5850,7 @@ MonoBehaviour:
     isSelected: 0
     cursorTextures:
     - {fileID: 2800000, guid: e61e72f425c56b646979a0c8fc85f16f, type: 3}
-    - {fileID: 2800000, guid: 8265fc231e88c4141ba226adbe6d4aa1, type: 3}
+    - {fileID: 2800000, guid: b6db370f972803343a7012126c134618, type: 3}
     offsetPosition: {x: 0, y: 0}
     updateDelayValue: 0.15
   frameRate: 0.25
@@ -5868,6 +5869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingPrefab: {fileID: 0}
+  buildingScript: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 128

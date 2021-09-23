@@ -5,6 +5,7 @@ using UnityEngine;
 public class DraggingBuilding : MonoBehaviour
 {
     public GameObject buildingPrefab;
+    public BuildingSO buildingScript;
     public LayerMask groundLayer;
 
     #region Singleton
@@ -37,9 +38,10 @@ public class DraggingBuilding : MonoBehaviour
         }
     }
 
-    public void SetBuildingPrefab(GameObject prefab)
+    public void SetBuildingPrefab(GameObject prefab, BuildingSO buildingScript)
     {
         buildingPrefab = prefab;
+        this.buildingScript = buildingScript;
     }
 
     private void UpdateDraggedPosition()
@@ -55,7 +57,19 @@ public class DraggingBuilding : MonoBehaviour
         if (buildingPrefab && CheckIfBuildingCanBeBuiltHere())
         {
             Instantiate(buildingPrefab, buildingPrefab.transform.position, buildingPrefab.transform.rotation);
+            RemoveRessourcesFromPlayerAfterBuilding();
             CancelBuilding();
+        }
+    }
+
+    private void RemoveRessourcesFromPlayerAfterBuilding()
+    {
+        foreach (BuildingSO.NeededRessourcesDatas thisNeededRessourceData in buildingScript.neededRessourcesToBuild)
+        {
+            if (thisNeededRessourceData.ressourceType == RessourcesHandler.Instance.GetThisRessource(thisNeededRessourceData.ressourceType).ressourceType)
+            {
+                RessourcesHandler.Instance.GetThisRessource(thisNeededRessourceData.ressourceType).RemoveToCurrentValue(thisNeededRessourceData.neededRessourceValue);
+            }
         }
     }
 
@@ -66,6 +80,7 @@ public class DraggingBuilding : MonoBehaviour
         buildingPrefab = null;
     }
 
+    //NEED TO BE BUILT TOO
     private bool CheckIfBuildingCanBeBuiltHere()
     {
         return true;

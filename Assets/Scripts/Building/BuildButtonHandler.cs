@@ -7,6 +7,7 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
 {
     public BuildingSO associatedBuilding;
     private GameObject buildingInstance;
+    private bool canBeBuilt = false;
 
     [Header("UI COMPONENTS")]
     public Image detectionFeedbackImage;
@@ -14,16 +15,6 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
     public Image disponibilityFeedbackImage;
     public Image buildingIconImage;
     Color color = Color.white;
-
-    private void OnEnable()
-    {
-        SubscribeRessourceEvent();
-    }
-
-    private void OnDisable()
-    {
-        UnsubscribeRessourceEvent();
-    }
 
     private void Start()
     {
@@ -38,43 +29,51 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
         buildingInstance = Instantiate(associatedBuilding.buildingPrefab, UtilityClass.GetCursorClickedPosition(LayerMask.NameToLayer("Ground")), associatedBuilding.buildingPrefab.transform.rotation);
     }
 
-    private void CheckIfTheBuildingCanBeBuilt(RessourceType neededRessourceType)
+    public void CheckIfTheBuildingCanBeBuilt()
     {
+        int requirementMet = 0;
+
         if (associatedBuilding.neededRessourcesToBuild.Count == 0) return;
 
-        for (int i = 0; i < RessourcesHandler.Instance.characterRessources.Count; i++)
+        foreach (BuildingSO.NeededRessourcesDatas thisNeededRessourceData in associatedBuilding.neededRessourcesToBuild)
         {
-            if (associatedBuilding.neededRessourcesToBuild [ i ].ressourceType == RessourcesHandler.Instance.characterRessources[ i ].ressourceType)
+            if (thisNeededRessourceData.neededRessourceValue == RessourcesHandler.Instance.GetThisRessource(thisNeededRessourceData.ressourceType).CurrentValue)
             {
-                if (associatedBuilding.neededRessourcesToBuild [ i ].neededRessourceValue >= RessourcesHandler.Instance.characterRessources [ i ].CurrentValue)
-                {
-                    Debug.Log("Can be built");
-                }
-                else
-                {
-                    Debug.Log("Cannot be built");
-                }
+                Debug.Log(
+                    thisNeededRessourceData.neededRessourceValue.ToString("0") + " "
+                    + thisNeededRessourceData.ressourceType.ToString() + " / "
+                    + RessourcesHandler.Instance.GetThisRessource(thisNeededRessourceData.ressourceType).CurrentValue.ToString() + " "
+                    + RessourcesHandler.Instance.GetThisRessource(thisNeededRessourceData.ressourceType).ressourceType.ToString());
+
+                requirementMet++;
             }
         }
-    }
 
-    #region Event
-    public void SubscribeRessourceEvent()
-    {
-        foreach (Ressource thisRessource in RessourcesHandler.Instance.characterRessources)
+        if (requirementMet == associatedBuilding.neededRessourcesToBuild.Count)
         {
-            thisRessource.OnRessourceValueChanged += CheckIfTheBuildingCanBeBuilt;
+            Debug.Log("Requirements are met !");
+            requirementMet = associatedBuilding.neededRessourcesToBuild.Count;
+            SetThisButtonToDisponibleAppearance();
+        }
+        else
+        {
+            SetThisButtonToIndisponibleAppearance();
         }
     }
 
-    public void UnsubscribeRessourceEvent()
+    private void SetThisButtonToDisponibleAppearance()
     {
-        foreach (Ressource thisRessource in RessourcesHandler.Instance.characterRessources)
-        {
-            thisRessource.OnRessourceValueChanged -= CheckIfTheBuildingCanBeBuilt;
-        }
+        darkerImage.gameObject.SetActive(false);
+        disponibilityFeedbackImage.color = Color.green;
+        canBeBuilt = true;
     }
-    #endregion
+
+    private void SetThisButtonToIndisponibleAppearance()
+    {
+        darkerImage.gameObject.SetActive(true);
+        disponibilityFeedbackImage.color = Color.red;
+        canBeBuilt = false;
+    }
 
     #region UI Event - Pointer
     public void OnPointerEnter(PointerEventData eventData)
@@ -93,12 +92,19 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!canBeBuilt)
+        {
+            //Throw feedback message - need to be built (ui message feedback)
+            Debug.Log("CANT BE BUILT, RESSOURCES REQUIREMENTS ARE NOT MET !");
+            return;
+        }
+
         Debug.Log("Click on this button");
 
         CursorHandler.Instance.SetCursorAppearance(CursorType.Building);
         InstantiateBuildingAtCursorPos();
 
-        DraggingBuilding.Instance.SetBuildingPrefab(buildingInstance);
+        DraggingBuilding.Instance.SetBuildingPrefab(buildingInstance, associatedBuilding);
     }
     #endregion
 }

@@ -16,7 +16,10 @@ public class RessourcesHandler : MonoBehaviour
     [SerializeField] private int instanceValue = 0;
     [SerializeField] private GameObject ressourceUICompartment;
     private List<RessourceUI> ressourceUIs = new List<RessourceUI>();
+    public Transform buildingButtonsHolder;
+    private List<BuildButtonHandler> buildButtonHandlers = new List<BuildButtonHandler>();
 
+    #region Singleton - Awake
     public static RessourcesHandler Instance;
 
     private void Awake()
@@ -30,9 +33,11 @@ public class RessourcesHandler : MonoBehaviour
             Instance = this;
         }
     }
+    #endregion
 
     private void OnEnable()
     {
+        PopulateBuildingButtonsList();
         SubscribeRessourceEvent();
     }
 
@@ -86,6 +91,8 @@ public class RessourcesHandler : MonoBehaviour
                 thisRessourceUI.UpdateRessourceValue(GetThisRessource(ressourceType).CurrentValue);
             }
         }
+
+        UpdateBuildingButtons();
     }
 
     private void IncreaseRessourcesOvertime()
@@ -120,6 +127,26 @@ public class RessourcesHandler : MonoBehaviour
             {
                 ressourceUIs [ i ].PlayFeedbackAnimation();
             }
+        }
+    }
+
+    private void PopulateBuildingButtonsList()
+    {
+        foreach (Transform child in buildingButtonsHolder)
+        {
+            buildButtonHandlers.Add(child.GetComponent<BuildButtonHandler>());
+        }
+
+        UpdateBuildingButtons();
+    }
+
+    private void UpdateBuildingButtons()
+    {
+        if (buildButtonHandlers.Count == 0) return;
+
+        for (int i = 0; i < buildButtonHandlers.Count; i++)
+        {
+            buildButtonHandlers [ i ].CheckIfTheBuildingCanBeBuilt();
         }
     }
     #endregion
