@@ -37,7 +37,7 @@ public class RessourcesHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        PopulateBuildingButtonsList();
+        CreateAndInitializeBuildingButtons();
         SubscribeRessourceEvent();
     }
 
@@ -82,24 +82,25 @@ public class RessourcesHandler : MonoBehaviour
         return null;
     }
 
-    private void SetRessourceDatas(RessourceType ressourceType)
+    private void SetRessourceValue(RessourceType ressourceType)
     {
-        foreach (RessourceUI thisRessourceUI in ressourceUIs)
+        for (int i = 0; i < ressourceUIs.Count; i++)
         {
-            if (thisRessourceUI.ressourceType == ressourceType)
+            if (ressourceUIs [ i ].ressourceType == ressourceType) 
             {
-                thisRessourceUI.UpdateRessourceValue(GetThisRessource(ressourceType).CurrentValue);
+                ressourceUIs [ i ].UpdateRessourceValue(GetThisRessource(ressourceType).CurrentValue);
+                return;
             }
         }
 
-        UpdateBuildingButtons();
+        UpdateBuildingButtonsStatus();
     }
 
     private void IncreaseRessourcesOvertime()
     {
-        foreach (Ressource thisRessource in characterRessources)
+        for (int i = 0; i < characterRessources.Count; i++)
         {
-            thisRessource.AddToCurrentValue(overtimeIncome);
+            characterRessources[i].AddToCurrentValue(overtimeIncome);
         }
     }
 
@@ -130,17 +131,17 @@ public class RessourcesHandler : MonoBehaviour
         }
     }
 
-    private void PopulateBuildingButtonsList()
+    private void CreateAndInitializeBuildingButtons()
     {
         foreach (Transform child in buildingButtonsHolder)
         {
             buildButtonHandlers.Add(child.GetComponent<BuildButtonHandler>());
         }
 
-        UpdateBuildingButtons();
+        UpdateBuildingButtonsStatus();
     }
 
-    private void UpdateBuildingButtons()
+    private void UpdateBuildingButtonsStatus()
     {
         if (buildButtonHandlers.Count == 0) return;
 
@@ -154,17 +155,17 @@ public class RessourcesHandler : MonoBehaviour
     #region Event
     private void SubscribeRessourceEvent()
     {
-        foreach (Ressource thisRessource in characterRessources)
+        for (int i = 0; i < characterRessources.Count; i++)
         {
-            thisRessource.OnRessourceValueChanged += SetRessourceDatas;
+            characterRessources [ i ].OnRessourceValueChanged += SetRessourceValue;
         }
     }
 
     private void UnsubscribeRessourceEvent()
     {
-        foreach (Ressource thisRessource in characterRessources)
+        for (int i = 0; i < characterRessources.Count; i++)
         {
-            thisRessource.OnRessourceValueChanged -= SetRessourceDatas;
+            characterRessources [ i ].OnRessourceValueChanged -= SetRessourceValue;
         }
     }
     #endregion

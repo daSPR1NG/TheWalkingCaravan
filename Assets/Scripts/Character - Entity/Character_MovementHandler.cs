@@ -57,7 +57,12 @@ namespace Khynan_Survival
             if (DirectionToMove != Vector3.zero)
             {
                 InteractionHandler interactionHandler = GetComponent<InteractionHandler>();
-                if (interactionHandler.TargetDetected != null) interactionHandler.ResetInteractionDatas();
+
+                if (interactionHandler.TargetDetected != null)
+                {
+                    interactionHandler.ResetInteractingState(); 
+                }
+                    
 
                 UtilityClass.ResetAgentDestination(NavMeshAgent);
 

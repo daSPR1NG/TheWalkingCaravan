@@ -31,30 +31,33 @@ public class InteractionHandler : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            if (Physics.Raycast(UtilityClass.GetMainCamera().ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, EntityLayer))
-            {
-                bool entityIsInteractive = hit.transform.GetComponent<IInteractive>() != null;
-
-                if (entityIsInteractive)
-                {
-                    UtilityClass.DebugMessage("Entity detected " + hit.transform.name);
-
-                    TargetDetected = hit.transform;
-
-                    collectableRessource = TargetDetected.GetComponent<CollectableRessource>();
-                    collectableRessource.interactingObject = transform;
-
-                    TryToInteract();
-                }
-            }
-            //Click on the ground
-            else
-            {
-                ResetInteractionDatas();
-            }
+            TryToDetectAnInteractiveEntity();
         }
 
         CheckRemainingDistanceWithTarget();
+    }
+
+    void TryToDetectAnInteractiveEntity()
+    {
+        if (Physics.Raycast(UtilityClass.GetMainCamera().ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, EntityLayer))
+        {
+            bool entityIsInteractive = hit.transform.GetComponent<IInteractive>() is not null;
+
+            if (entityIsInteractive)
+            {
+                UtilityClass.DebugMessage("Entity detected " + hit.transform.name);
+
+                TargetDetected = hit.transform;
+
+                collectableRessource = TargetDetected.GetComponent<CollectableRessource>();
+                collectableRessource.interactingObject = transform;
+
+                TryToInteract();
+                return;
+            }
+        }
+
+        ResetInteractingState();
     }
 
     void TryToInteract()
@@ -64,19 +67,20 @@ public class InteractionHandler : MonoBehaviour
         if (distanceBetweenObjects > collectableRessource.minimumDistanceToInteract)
         {
             agentStartingStoppingDist = NavMeshAgent.stoppingDistance;
-            UtilityClass.SetAgentStoppingDistance(NavMeshAgent, collectableRessource.minimumDistanceToInteract * 2);
 
+            UtilityClass.SetAgentStoppingDistance(NavMeshAgent, collectableRessource.minimumDistanceToInteract * 2);
             UtilityClass.SetAgentDestination(NavMeshAgent, TargetDetected.position);
         }
     }
 
     void CheckRemainingDistanceWithTarget()
     {
-        if (!NavMeshAgent.hasPath) return;
+        if (TargetDetected is null || !NavMeshAgent.hasPath) return;
 
         float distanceBetweenObjects = Vector3.Distance(transform.position, TargetDetected.position);
 
-        if (distanceBetweenObjects <= collectableRessource.minimumDistanceToInteract * 2 && !isInteracting)
+        if (distanceBetweenObjects <= collectableRessource.minimumDistanceToInteract * 2 
+            && !isInteracting)
         {
             NavMeshAgent.stoppingDistance = agentStartingStoppingDist;
 
@@ -89,11 +93,12 @@ public class InteractionHandler : MonoBehaviour
         }
     }
 
-    public void ResetInteractionDatas()
+    public void ResetInteractingState()
     {
-        if (TargetDetected)
+        if (TargetDetected is not null)
         {
-            collectableRessource.ExitInteraction(transform);
+            collectableRessource.ExitInteraction();
+
             TargetDetected = null;
             isInteracting = false;
 

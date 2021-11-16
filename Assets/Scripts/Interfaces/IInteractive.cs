@@ -3,7 +3,7 @@ using UnityEngine;
 public interface IInteractive
 {
     public abstract void Interaction(Transform _interactingObject);
-    public abstract void ExitInteraction(Transform _interactingObject);
+    public abstract void ExitInteraction();
 
     public static class IInteractiveExtension
     {
