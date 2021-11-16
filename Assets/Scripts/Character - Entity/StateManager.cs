@@ -26,9 +26,12 @@ public class StateManager : MonoBehaviour
 
     public void SwitchState(BasicState newState)
     {
-        CurrentState.ExitState(this);
+        if (CurrentState != newState)
+        {
+            CurrentState.ExitState(this);
 
-        CurrentState = newState;
-        newState.EnterState(this);
+            CurrentState = newState;
+            newState.EnterState(this);
+        }
     }
 }

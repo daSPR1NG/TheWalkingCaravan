@@ -12,7 +12,7 @@ public class InteractionHandler : MonoBehaviour
 
     [Header("DETECTION PARAMETERS")]
     public LayerMask EntityLayer;
-    public Transform TargetDetected;
+    public Transform TargetDetected = null;
     public bool isInteracting = false; // Debug
     public bool HasATarget => TargetDetected != null;
     CollectableRessource collectableRessource;
@@ -95,9 +95,11 @@ public class InteractionHandler : MonoBehaviour
 
     public void ResetInteractingState()
     {
-        if (TargetDetected is not null)
+        if (TargetDetected is not null 
+            && collectableRessource is not null)
         {
             collectableRessource.ExitInteraction();
+            collectableRessource = null;
 
             TargetDetected = null;
             isInteracting = false;

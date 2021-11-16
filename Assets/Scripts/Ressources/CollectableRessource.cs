@@ -24,7 +24,10 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     {
         interactingObject = null;
 
-        StopCoroutine(interactionCoroutine);
+        if (interactionCoroutine is not null) 
+        { 
+            StopCoroutine(interactionCoroutine); 
+        }
     }
 
     public virtual void Interaction(Transform _interactingObject)

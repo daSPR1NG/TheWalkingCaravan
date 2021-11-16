@@ -157,7 +157,7 @@ public static class UtilityClass
 
         Character_MovementHandler stateManager = navMeshAgent.GetComponent<Character_MovementHandler>();
 
-        if (stateManager)
+        if (stateManager is not null)
         {
             stateManager.SwitchState(stateManager.MovingState);
         }
@@ -173,9 +173,13 @@ public static class UtilityClass
     {
         if (navMeshAgent.hasPath)
         {
+            navMeshAgent.isStopped = true;
+
             navMeshAgent.path.ClearCorners();
             navMeshAgent.ResetPath();
         }
+
+        navMeshAgent.isStopped = false;
     }
     #endregion
 

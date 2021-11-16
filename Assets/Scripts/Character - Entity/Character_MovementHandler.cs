@@ -25,9 +25,9 @@ namespace Khynan_Survival
             SetInitialStateAtStart(IdleState);
         }
 
-        void FixedUpdate() => ProcessMovement();
+        void FixedUpdate() => ProcessZQSDMovement();
 
-        private void ProcessMovement()
+        private void ProcessZQSDMovement()
         {
             DirectionToMove = Vector3.zero;
 
@@ -56,17 +56,20 @@ namespace Khynan_Survival
 
             if (DirectionToMove != Vector3.zero)
             {
-                InteractionHandler interactionHandler = GetComponent<InteractionHandler>();
-
-                if (interactionHandler.TargetDetected != null)
-                {
-                    interactionHandler.ResetInteractingState(); 
-                }
-                    
+                CheckInteractionHandlerAndResetIt();
 
                 UtilityClass.ResetAgentDestination(NavMeshAgent);
+                SwitchState(MovingState);
+            }
+        }
 
-                if (CurrentState != MovingState) SwitchState(MovingState);
+        private void CheckInteractionHandlerAndResetIt()
+        {
+            InteractionHandler interactionHandler = GetComponent<InteractionHandler>();
+
+            if (interactionHandler.TargetDetected is not null)
+            {
+                interactionHandler.ResetInteractingState();
             }
         }
 
