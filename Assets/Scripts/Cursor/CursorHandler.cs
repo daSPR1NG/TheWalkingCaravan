@@ -39,6 +39,7 @@ public class CursorHandler : MonoBehaviour
     public bool cursorIsConfined = false;
     public bool cursorIsLocked= false;
 
+    #region Singleton
     public static CursorHandler Instance;
 
     private void Awake()
@@ -52,6 +53,7 @@ public class CursorHandler : MonoBehaviour
             Instance = this;
         }
     }
+    #endregion
 
     private void Start()
     {
@@ -85,7 +87,13 @@ public class CursorHandler : MonoBehaviour
 
     private void UpdateCursorAppearance()
     {
-        if (GetCurrentCursorAppearance().cursorTextures.Count <= 1) return;
+        if (GameManager.Instance.GameIsPaused())
+        {
+            SetCursorAppearance(CursorType.Default);
+            return;
+        }
+
+        if (GetCurrentCursorAppearance().cursorTextures.Count <= 1)  { return; }
 
         frameTimer -= Time.deltaTime;
 
@@ -99,11 +107,11 @@ public class CursorHandler : MonoBehaviour
 
     private CursorAppearance GetCurrentCursorAppearance()
     {
-        foreach (CursorAppearance thisAppearance in cursorAppearances)
+        for (int i = 0; i < cursorAppearances.Count; i++)
         {
-            if (thisAppearance.isSelected)
+            if (cursorAppearances[ i ].isSelected)
             {
-                return thisAppearance;
+                return cursorAppearances [ i ];
             }
         }
 
@@ -113,9 +121,9 @@ public class CursorHandler : MonoBehaviour
     #region Editor
     private void OnValidate()
     {
-        foreach (CursorAppearance thisCursorAppearance in cursorAppearances)
+        for (int i = 0; i < cursorAppearances.Count; i++)
         {
-            thisCursorAppearance.appearanceName = thisCursorAppearance.cursorType.ToString();
+            cursorAppearances [ i ].appearanceName = cursorAppearances [ i ].cursorType.ToString();
         }
     }
     #endregion

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum CameraLockState { Locked, Unlocked }
 
-public class Character_CameraController : MonoBehaviour
+public class PlayerCharacter_CameraController : MonoBehaviour
 {
     [Header("CAMERA SETTINGS")]
     [SerializeField] private CameraLockState cameraLockState;
@@ -38,7 +38,7 @@ public class Character_CameraController : MonoBehaviour
     public KeyCode ChangeCameraLockStateInput { get => changeCameraLockStateInput; }
     public KeyCode CameraFocusOnTargetInput { get => cameraFocusOnTargetInput; }
 
-    public static Character_CameraController Instance;
+    public static PlayerCharacter_CameraController Instance;
 
     private void Awake()
     {
@@ -59,6 +59,12 @@ public class Character_CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GameIsPaused()
+                || CombatManager.Instance.IsInCombat())
+        {
+            return;
+        }
+
         if (UtilityClass.IsKeyPressed(ChangeCameraLockStateInput))
         {
             SetCameraLockStateAtRuntime();

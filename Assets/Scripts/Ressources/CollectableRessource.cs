@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(Outline))]
@@ -8,11 +10,16 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     public Transform interactingObject;
     public float minimumDistanceToInteract = 1.25f;
     public string interactionName = "[Type HERE]";
+    public bool hasAnInteractionOccurring = false; //public to debug
 
     [Header("RESSOURCE SETTINGS")]
     public RessourceType ressourceType = RessourceType.Unassigned;
     public float ressourceAmount = 1000f;
     public float collectionDuration = 5f;
+    float currentCollectionDuration;
+
+    [Header("APPEARANCE SETTINGS")]
+    public List<Color> appearances;
 
     private Coroutine interactionCoroutine;
 
@@ -20,9 +27,16 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     private Outline OutlineComponent => GetComponent<Outline>();
     #endregion
 
+    private void Start()
+    {
+        currentCollectionDuration = collectionDuration;
+    }
+
     public virtual void ExitInteraction()
     {
         interactingObject = null;
+
+        hasAnInteractionOccurring = false;
 
         if (interactionCoroutine is not null) 
         { 
@@ -33,6 +47,7 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     public virtual void Interaction(Transform _interactingObject)
     {
         interactingObject = _interactingObject;
+        collectionDuration = currentCollectionDuration;
 
         if (ressourceType != RessourceType.Unassigned && ressourceAmount != 0)
         {
@@ -44,24 +59,51 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
 
     IEnumerator InteractionCoroutine()
     {
-        //float midCollectionDuration = collectionDuration / 2;
         //Change the sprite to a damaged one to see the advancement.
+        hasAnInteractionOccurring = true;
 
-        yield return new WaitForSeconds(collectionDuration);
+        for (int i = 0; i < appearances.Count; i++)
+        {
+            yield return new WaitForSeconds(collectionDuration / appearances.Count);
+            currentCollectionDuration -= (collectionDuration / appearances.Count);
 
-        //Maybe there is a need to extract a method from this
+            UpdateAppearance(i);
+        }
+
+        currentCollectionDuration = 0;
+
+        yield return new WaitForEndOfFrame();
+
+        DeliverRessourcesToTheInteractingActor();
+    }
+
+    private void UpdateAppearance(int index)
+    {
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.material.color = appearances [ index ];
+
+        Debug.Log("Change appearance :" + " APPERANCE N° " + index);
+    }
+
+    private void DeliverRessourcesToTheInteractingActor()
+    {
         if (interactingObject is not null)
         {
             RessourcesHandler ressourcesHandlerRef = interactingObject.GetComponent<RessourcesHandler>();
-
             ressourcesHandlerRef.GetThisRessource(ressourceType).AddToCurrentValue(ressourceAmount);
-            ressourcesHandlerRef.TriggerUIFeedbackOnRessourceCollectionOrLoss(ressourceType);
+
+            Debug.Log("Ressources have been given to actor.");
 
             interactingObject.GetComponent<InteractionHandler>().ResetInteractingState();
             ExitInteraction();
-        }
-        //-------------------------------------------------------------------------------
 
+            DestroyOnCollectionCompleted();
+        }
+    }
+
+    private void DestroyOnCollectionCompleted()
+    {
+        Debug.Log("Destroy, interaction has been completed.");
         //Call Destruction Animation or change the sprite.
         //Play the SFX.
     }

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private GameObject pauseMenuComponent;
 
+    #region Singleton
     public static UIManager Instance;
 
     private void Awake()
@@ -18,6 +20,17 @@ public class UIManager : MonoBehaviour
             Instance = this;
         }
     }
+    #endregion
+
+    private void OnEnable()
+    {
+        GameManager.OnGameStateChanged += TogglePauseMenu;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChanged -= TogglePauseMenu;
+    }
 
     void Start()
     {
@@ -29,4 +42,40 @@ public class UIManager : MonoBehaviour
         
     }
 
+    private void TogglePauseMenu()
+    {
+        if (!IsThisComponentDisplayed(pauseMenuComponent))
+        {
+            DisplayThisUIComponent(pauseMenuComponent);
+            return;
+        }
+
+        HideThisUIComponent(pauseMenuComponent);
+    }
+
+    private void DisplayThisUIComponent(GameObject component)
+    {
+        if (component is not null)
+        {
+            component.SetActive(true);
+        }
+    }
+
+    private void HideThisUIComponent(GameObject component)
+    {
+        if (component is not null)
+        {
+            component.SetActive(false);
+        }
+    }
+
+    private bool IsThisComponentDisplayed(GameObject component)
+    {
+        if (component.activeInHierarchy)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

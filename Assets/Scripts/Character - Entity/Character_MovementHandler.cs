@@ -21,31 +21,41 @@ namespace Khynan_Survival
 
         private void Start()
         {
-            SetCharacterSpeed(10f);
-            SetInitialStateAtStart(IdleState);
+            SetCharacterSpeedTo(10f);
+            SetDefaultStateAtStart(IdleState);
         }
 
         void FixedUpdate() => ProcessZQSDMovement();
 
         private void ProcessZQSDMovement()
         {
+            if (GameManager.Instance.GameIsPaused()
+                || CombatManager.Instance.IsInCombat())
+            {
+                return;
+            }
+
             DirectionToMove = Vector3.zero;
 
             //Vertical Axis
-            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKey(KeyCode.Z))
+            if (UtilityClass.IsKeyPressed(KeyCode.Z) 
+                || UtilityClass.IsKeyMaintained(KeyCode.Z))
             {
                 DirectionToMove.z = 1;
             }
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.S))
+            if (UtilityClass.IsKeyPressed(KeyCode.S) 
+                || UtilityClass.IsKeyMaintained(KeyCode.S))
             {
                 DirectionToMove.z = -1;
             }
             //Horizontal Axis
-            if (Input.GetKeyDown(KeyCode.Q) || Input.GetKey(KeyCode.Q))
+            if (UtilityClass.IsKeyPressed(KeyCode.Q) 
+                || UtilityClass.IsKeyMaintained(KeyCode.Q))
             {
                 DirectionToMove.x = -1;
             }
-            if (Input.GetKeyDown(KeyCode.D) || Input.GetKey(KeyCode.D))
+            if (UtilityClass.IsKeyPressed(KeyCode.D) 
+                || UtilityClass.IsKeyMaintained(KeyCode.D))
             {
                 DirectionToMove.x = 1;
             }
@@ -56,14 +66,14 @@ namespace Khynan_Survival
 
             if (DirectionToMove != Vector3.zero)
             {
-                CheckInteractionHandlerAndResetIt();
+                CheckInteractionStateAndResetIt();
 
                 UtilityClass.ResetAgentDestination(NavMeshAgent);
                 SwitchState(MovingState);
             }
         }
 
-        private void CheckInteractionHandlerAndResetIt()
+        private void CheckInteractionStateAndResetIt()
         {
             InteractionHandler interactionHandler = GetComponent<InteractionHandler>();
 
@@ -73,7 +83,7 @@ namespace Khynan_Survival
             }
         }
 
-        public void SetCharacterSpeed(float newSpeed)
+        public void SetCharacterSpeedTo(float newSpeed)
         {
             MovementSpeed = newSpeed;
             NavMeshAgent.speed = newSpeed;

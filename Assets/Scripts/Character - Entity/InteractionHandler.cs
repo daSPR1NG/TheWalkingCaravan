@@ -75,7 +75,8 @@ public class InteractionHandler : MonoBehaviour
 
     void CheckRemainingDistanceWithTarget()
     {
-        if (TargetDetected is null || !NavMeshAgent.hasPath) return;
+        if (TargetDetected is null || !NavMeshAgent.hasPath
+            || TargetDetected is not null && isInteracting) { return; }
 
         float distanceBetweenObjects = Vector3.Distance(transform.position, TargetDetected.position);
 

@@ -18,7 +18,7 @@ public class StateManager : MonoBehaviour
         CurrentState.ProcessState(this);
     }
 
-    protected void SetInitialStateAtStart(BasicState baseState)
+    protected void SetDefaultStateAtStart(BasicState baseState)
     {
         CurrentState = baseState;
         CurrentState.EnterState(this);
