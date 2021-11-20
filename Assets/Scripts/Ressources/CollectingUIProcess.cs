@@ -11,19 +11,19 @@ public class CollectingUIProcess : MonoBehaviour
     public TextMeshProUGUI actionText;
     public Image filledImage;
 
-    private float timer;
+    private float currentTimerValue;
     private float maxTimer;
 
     private void OnEnable()
     {
         InteractionHandler.OnInteraction += SetUIDatas;
-        InteractionHandler.OnEndOfInteraction += ResetUIDatas;
+        InteractionHandler.OnEndOfInteraction += ResetUIs;
     }
 
     private void OnDisable()
     {
         InteractionHandler.OnInteraction -= SetUIDatas;
-        InteractionHandler.OnEndOfInteraction -= ResetUIDatas;
+        InteractionHandler.OnEndOfInteraction -= ResetUIs;
     }
 
     private void Update()
@@ -31,21 +31,22 @@ public class CollectingUIProcess : MonoBehaviour
         if (content.gameObject.activeInHierarchy) ProcessTimer();
     }
 
-    public void SetUIDatas(float startingTimer, string action)
+    public void SetUIDatas(float currentTimerValue, float maxDuration, string action)
     {
         content.gameObject.SetActive(true);
 
-        maxTimer = startingTimer;
-        timer = maxTimer;
+        //Storing passed datas
+        maxTimer = maxDuration;
+        this.currentTimerValue = currentTimerValue;
 
-        timerText.text = timer.ToString("0");
+        timerText.text = currentTimerValue.ToString("0.00");
 
-        filledImage.fillAmount = startingTimer / maxTimer;
+        filledImage.fillAmount = currentTimerValue / maxDuration;
 
         actionText.text = action;
     }
 
-    private void SetUIDatasAtRuntime(float timerValue)
+    private void SetUIAtRuntime(float timerValue)
     {
         if (timerValue > 1) timerText.text = timerValue.ToString("0");
 
@@ -54,20 +55,20 @@ public class CollectingUIProcess : MonoBehaviour
         filledImage.fillAmount = timerValue / maxTimer;
     }
 
-    private void ResetUIDatas()
+    private void ResetUIs()
     {
         maxTimer = 0;
-        timer = 0;
+        currentTimerValue = 0;
 
         content.gameObject.SetActive(false);
     }
 
     private void ProcessTimer()
     {
-        timer -= Time.deltaTime;
+        currentTimerValue -= Time.deltaTime;
 
-        SetUIDatasAtRuntime(timer);
+        SetUIAtRuntime(currentTimerValue);
 
-        if (timer <= 0) content.gameObject.SetActive(false);
+        if (currentTimerValue <= 0) content.gameObject.SetActive(false);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class InteractionHandler : MonoBehaviour
 {
-    public delegate void InteractionEventHandler(float interactionDuration, string interactionName);
+    public delegate void InteractionEventHandler(float currentInteractionTimer, float interactionDuration, string interactionName);
     public static event InteractionEventHandler OnInteraction;
 
     public delegate void EndOfInteractionEventHandler();
@@ -29,6 +29,11 @@ public class InteractionHandler : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.GameIsPaused() || GameManager.Instance.IsInCombat())
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
             TryToDetectAnInteractiveEntity();
@@ -43,6 +48,13 @@ public class InteractionHandler : MonoBehaviour
         {
             bool entityIsInteractive = hit.transform.GetComponent<IInteractive>() is not null;
 
+            if (TargetDetected
+                && entityIsInteractive 
+                && hit.transform.gameObject != TargetDetected)
+            {
+                ResetInteractingState();
+            }
+
             if (entityIsInteractive)
             {
                 UtilityClass.DebugMessage("Entity detected " + hit.transform.name);
@@ -53,11 +65,9 @@ public class InteractionHandler : MonoBehaviour
                 collectableRessource.interactingObject = transform;
 
                 TryToInteract();
-                return;
             }
         }
-
-        ResetInteractingState();
+        else { ResetInteractingState(); }
     }
 
     void TryToInteract()
@@ -88,7 +98,7 @@ public class InteractionHandler : MonoBehaviour
             collectableRessource.Interaction(transform);
 
             //Call UI Event and set the informations - Display
-            OnInteraction?.Invoke(collectableRessource.collectionDuration, collectableRessource.interactionName);
+            OnInteraction?.Invoke(collectableRessource.GetCurrentInterationTimer(), collectableRessource.collectionDuration, collectableRessource.interactionName);
 
             isInteracting = true;
         }

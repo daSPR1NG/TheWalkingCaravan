@@ -16,7 +16,7 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     public RessourceType ressourceType = RessourceType.Unassigned;
     public float ressourceAmount = 1000f;
     public float collectionDuration = 5f;
-    float currentCollectionDuration;
+    float currentCollectionTimerValue;
 
     [Header("APPEARANCE SETTINGS")]
     public List<Color> appearances;
@@ -29,7 +29,7 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
 
     private void Start()
     {
-        currentCollectionDuration = collectionDuration;
+        currentCollectionTimerValue = collectionDuration;
     }
 
     public virtual void ExitInteraction()
@@ -47,7 +47,7 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     public virtual void Interaction(Transform _interactingObject)
     {
         interactingObject = _interactingObject;
-        collectionDuration = currentCollectionDuration;
+        collectionDuration = currentCollectionTimerValue;
 
         if (ressourceType != RessourceType.Unassigned && ressourceAmount != 0)
         {
@@ -65,16 +65,21 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
         for (int i = 0; i < appearances.Count; i++)
         {
             yield return new WaitForSeconds(collectionDuration / appearances.Count);
-            currentCollectionDuration -= (collectionDuration / appearances.Count);
+            //currentCollectionTimerValue -= (collectionDuration / appearances.Count);
 
             UpdateAppearance(i);
         }
 
-        currentCollectionDuration = 0;
+        currentCollectionTimerValue = 0;
 
         yield return new WaitForEndOfFrame();
 
         DeliverRessourcesToTheInteractingActor();
+    }
+
+    public float GetCurrentInterationTimer()
+    {
+        return currentCollectionTimerValue;
     }
 
     private void UpdateAppearance(int index)
@@ -117,6 +122,15 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     public void OnMouseExit()
     {
         IDetectable.IDetectableExtension.SetCursorAppearanceOnDetection(CursorType.Default, OutlineComponent, false, transform.name + " is no longer detected.");
+    }
+
+    private void OnMouseOver()
+    {
+        if (OutlineComponent.enabled 
+            && (GameManager.Instance.GameIsPaused() || GameManager.Instance.IsInCombat()))
+        {
+            OutlineComponent.enabled = false;
+        }
     }
     #endregion
 }

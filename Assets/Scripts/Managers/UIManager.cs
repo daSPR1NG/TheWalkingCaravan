@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("PRINCIPAL UI COMPONENTS")]
     [SerializeField] private GameObject pauseMenuComponent;
 
     #region Singleton
@@ -18,6 +17,7 @@ public class UIManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
     #endregion
@@ -32,16 +32,6 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameStateChanged -= TogglePauseMenu;
     }
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     private void TogglePauseMenu()
     {
         if (!IsThisComponentDisplayed(pauseMenuComponent))
@@ -53,6 +43,7 @@ public class UIManager : MonoBehaviour
         HideThisUIComponent(pauseMenuComponent);
     }
 
+    #region General methods
     private void DisplayThisUIComponent(GameObject component)
     {
         if (component is not null)
@@ -78,4 +69,5 @@ public class UIManager : MonoBehaviour
 
         return false;
     }
+    #endregion
 }

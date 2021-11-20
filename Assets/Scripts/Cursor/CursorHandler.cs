@@ -87,7 +87,7 @@ public class CursorHandler : MonoBehaviour
 
     private void UpdateCursorAppearance()
     {
-        if (GameManager.Instance.GameIsPaused())
+        if (GameManager.Instance.GameIsPaused() || GameManager.Instance.IsInCombat())
         {
             SetCursorAppearance(CursorType.Default);
             return;

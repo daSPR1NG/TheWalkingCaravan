@@ -29,8 +29,7 @@ namespace Khynan_Survival
 
         private void ProcessZQSDMovement()
         {
-            if (GameManager.Instance.GameIsPaused()
-                || CombatManager.Instance.IsInCombat())
+            if (GameManager.Instance.GameIsPaused() || GameManager.Instance.IsInCombat())
             {
                 return;
             }

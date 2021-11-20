@@ -5,7 +5,12 @@ using UnityEngine;
 public enum GameState
 {
     Play,
-    Pause
+    Pause,
+}
+public enum PlayerCombatState
+{
+    OutOfCombat,
+    InCombat,
 }
 
 public class GameManager : MonoBehaviour
@@ -14,6 +19,12 @@ public class GameManager : MonoBehaviour
     public static event GameStateHandler OnGameStateChanged;
 
     public GameState gameState = GameState.Play;
+
+    public delegate void CombatStatusHandler();
+    public static event CombatStatusHandler OnEnteringCombat;
+    public static event CombatStatusHandler OnExitingCombat;
+
+    public PlayerCombatState playerGameState = PlayerCombatState.OutOfCombat;
 
     #region Singleton
     public static GameManager Instance;
@@ -27,13 +38,14 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
     #endregion
 
     void Start()
     {
-        ResumeGame();
+        SetGameStateToPlayingMod();
     }
 
     void Update()
@@ -42,6 +54,16 @@ public class GameManager : MonoBehaviour
         {
             ToggleGameState();
         }
+
+        if (UtilityClass.IsKeyPressed(KeyCode.C))
+        {
+            EnterCombat();
+        }
+
+        if (UtilityClass.IsKeyPressed(KeyCode.V))
+        {
+            ExitCombat();
+        }
     }
 
     #region Game states methods
@@ -49,23 +71,23 @@ public class GameManager : MonoBehaviour
     {
         if (GameIsPlaying())
         {
-            PauseTheGame();
+            SetGameStateToPause();
         }
         else
         {
-            ResumeGame();
+            SetGameStateToPlayingMod();
         }
 
         OnGameStateChanged?.Invoke();
     }
 
-    public void PauseTheGame()
+    public void SetGameStateToPause()
     {
         gameState = GameState.Pause;
         SetTimeScaleTo(0);
     }
 
-    public void ResumeGame()
+    public void SetGameStateToPlayingMod()
     {
         gameState = GameState.Play;
         SetTimeScaleTo(1);
@@ -90,6 +112,40 @@ public class GameManager : MonoBehaviour
     public bool GameIsPlaying()
     {
         if (gameState == GameState.Play)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
+
+    #region Combat game states methods
+    public void EnterCombat()
+    {
+        SetCombatState();
+        OnEnteringCombat?.Invoke();
+    }
+
+    public void ExitCombat()
+    {
+        SetOutOfCombatState();
+        OnExitingCombat?.Invoke();
+    }
+
+    private void SetOutOfCombatState()
+    {
+        playerGameState = PlayerCombatState.OutOfCombat;
+    }
+
+    private void SetCombatState()
+    {
+        playerGameState = PlayerCombatState.InCombat;
+    }
+
+    public bool IsInCombat()
+    {
+        if (playerGameState == PlayerCombatState.InCombat)
         {
             return true;
         }

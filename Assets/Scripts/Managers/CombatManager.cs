@@ -1,16 +1,16 @@
+using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public enum PlayerCombatState
-{
-    OutOfCombat,
-    InCombat,
-}
+using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
-    public PlayerCombatState playerGameState = PlayerCombatState.OutOfCombat;
+    [Space]
+    [Header("COMBAT CROSSFADE")]
+    [SerializeField] private GameObject crossFadeObject;
+    Image ImageRef => crossFadeObject.GetComponentInChildren<Image>();
+    [SerializeField] private float fadeDuration = .75f;
+    [SerializeField] private float fadeTransitionDuration = .75f;
 
     #region Singleton
     public static CombatManager Instance;
@@ -24,59 +24,55 @@ public class CombatManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
     #endregion
+
+    private void OnEnable()
+    {
+        GameManager.OnEnteringCombat += EnterCombat;
+        GameManager.OnExitingCombat += ExitCombat;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnEnteringCombat -= EnterCombat;
+        GameManager.OnExitingCombat -= ExitCombat;
+    }
 
     void Start()
     {
-        
+        crossFadeObject.SetActive(false);
     }
 
-    void Update()
+    #region Combat
+    private void EnterCombat()
     {
-        
+        StartCoroutine(FadeInCoroutine(ImageRef, 1, 0, fadeDuration, true));
     }
 
-    #region Combat game states methods
-    public void SetOutOfCombatState()
+    private void ExitCombat()
     {
-        playerGameState = PlayerCombatState.OutOfCombat;
+        StartCoroutine(FadeInCoroutine(ImageRef, 1, 0, fadeDuration, false));
     }
 
-    public void SetCombatState()
+    IEnumerator FadeInCoroutine(Image imageRef, float midAlphaValue, float endAlphaValue, float fadeDuration, bool displayContent)
     {
-        playerGameState = PlayerCombatState.InCombat;
-    }
+        yield return new WaitUntil(() => GameManager.Instance.GameIsPlaying());
 
-    public bool IsOutOfCombat()
-    {
-        if (playerGameState == PlayerCombatState.OutOfCombat)
-        {
-            return true;
-        }
+        crossFadeObject.SetActive(true);
 
-        return false;
-    }
+        yield return imageRef.DOFade(midAlphaValue, fadeDuration).WaitForCompletion();
 
-    public bool IsInCombat()
-    {
-        if (playerGameState == PlayerCombatState.InCombat)
-        {
-            return true;
-        }
+        _SceneManager.Instance.LoadASceneByName(_SceneManager.Instance.CombatScene, UnityEngine.SceneManagement.LoadSceneMode.Single);
 
-        return false;
+        yield return new WaitUntil(() => _SceneManager.Instance.IsThisSceneLoaded(_SceneManager.Instance.CombatScene));
+
+        yield return new WaitForSeconds(fadeTransitionDuration);
+        yield return imageRef.DOFade(endAlphaValue, fadeDuration).WaitForCompletion();
+
+        crossFadeObject.SetActive(false);
     }
     #endregion
-
-    public void EnterCombat()
-    {
-        SetCombatState();
-    }
-
-    public void ExitCombat()
-    {
-       SetOutOfCombatState();
-    }
 }

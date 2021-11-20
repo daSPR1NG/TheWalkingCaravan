@@ -59,8 +59,7 @@ public class PlayerCharacter_CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.GameIsPaused()
-                || CombatManager.Instance.IsInCombat())
+        if (GameManager.Instance.GameIsPaused() || GameManager.Instance.IsInCombat())
         {
             return;
         }
