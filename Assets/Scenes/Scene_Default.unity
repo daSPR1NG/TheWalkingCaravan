@@ -562,7 +562,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7770035, y: 1}
+    m_SensorSize: {x: 1.7783784, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -654,7 +654,7 @@ MonoBehaviour:
   changeCameraLockStateInput: 9
   cameraFocusOnTargetInput: 32
   target: {fileID: 690190698}
-  followingSpeed: 5.5
+  followingSpeed: 3
   screenEdgesThreshold: 25
   cameraMovementSpeed: 45
   usesScreenEdgesMovement: 1
@@ -988,7 +988,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 28.497986, y: 0}
+  m_AnchoredPosition: {x: 28.498047, y: 0}
   m_SizeDelta: {x: 894.8736, y: 64.0325}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &238857996
@@ -1921,9 +1921,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ShowDebugText: 0
   m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
+  m_IgnoreTimeScale: 1
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
+  m_UpdateMethod: 1
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
@@ -4181,7 +4181,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &984166089
 GameObject:
@@ -4194,7 +4194,7 @@ GameObject:
   - component: {fileID: 984166091}
   - component: {fileID: 984166090}
   m_Layer: 0
-  m_Name: Ressource Component Manager
+  m_Name: In Game Ressource Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4403,6 +4403,70 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1054641525}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1070588499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1070588501}
+  - component: {fileID: 1070588500}
+  m_Layer: 0
+  m_Name: TeamManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1070588500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070588499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b5460be835e2a4f86ce2b664408d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxUnitsInPlayerTeam: 3
+  currentPlayerTeam:
+  - unitName: Warrior
+    unitID: 0
+    unitType: 1
+    prefab: {fileID: 3915252159709968816, guid: 0212ad56695e3b444b3b685ec5be02ad, type: 3}
+  - unitName: Warrior
+    unitID: 0
+    unitType: 1
+    prefab: {fileID: 3915252159709968816, guid: 0212ad56695e3b444b3b685ec5be02ad, type: 3}
+  maxUnitsInEnemyTeam: 3
+  currentEnemyTeam:
+  - unitName: Assassin
+    unitID: 0
+    unitType: 2
+    prefab: {fileID: 6522034746004154714, guid: f35fb0b1be28f6148b7219c3219ebe7b, type: 3}
+  - unitName: Assassin
+    unitID: 0
+    unitType: 2
+    prefab: {fileID: 6522034746004154714, guid: f35fb0b1be28f6148b7219c3219ebe7b, type: 3}
+--- !u!4 &1070588501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070588499}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1096398364
 GameObject:
   m_ObjectHideFlags: 0
@@ -6029,7 +6093,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &1414543498
 MonoBehaviour:
@@ -7110,7 +7174,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1655937557
 GameObject:
@@ -8086,7 +8150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46cf348f1a4f61f40a95f4d97e3afe7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatScene: Scene_Combat
+  defaultSceneName: Scene_Default
+  combatSceneName: Scene_Combat
 --- !u!4 &1787725052
 Transform:
   m_ObjectHideFlags: 0
@@ -8100,7 +8165,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1807949309
 GameObject:

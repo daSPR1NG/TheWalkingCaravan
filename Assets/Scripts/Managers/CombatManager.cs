@@ -41,37 +41,57 @@ public class CombatManager : MonoBehaviour
         GameManager.OnExitingCombat -= ExitCombat;
     }
 
-    void Start()
-    {
-        crossFadeObject.SetActive(false);
-    }
+    void Start() => DesactivateCrossFadeObject();
 
-    #region Combat
+    #region Combat transition
     private void EnterCombat()
     {
-        StartCoroutine(FadeInCoroutine(ImageRef, 1, 0, fadeDuration, true));
+        StartCoroutine(FadeInCoroutine(ImageRef, 1, 0, fadeDuration, _SceneManager.Instance.CombatSceneName));
+        //Save some player informations such as position...
     }
 
     private void ExitCombat()
     {
-        StartCoroutine(FadeInCoroutine(ImageRef, 1, 0, fadeDuration, false));
+        StartCoroutine(FadeInCoroutine(ImageRef, 1, 0, fadeDuration, _SceneManager.Instance.DefaultSceneName));
+        //Restore some player informations such as position...
     }
 
-    IEnumerator FadeInCoroutine(Image imageRef, float midAlphaValue, float endAlphaValue, float fadeDuration, bool displayContent)
+    #region Summary
+    /// <summary>
+    /// Execute a fade transition between the current scene and the wanted scene we want to load.
+    /// </summary>
+    /// <param name="imageRef"></param>
+    /// <param name="midAlphaValue"></param>
+    /// <param name="endAlphaValue"></param>
+    /// <param name="fadeDuration"></param>
+    /// <param name="sceneToLoad"></param>
+    /// <returns></returns>
+    #endregion
+    IEnumerator FadeInCoroutine(Image imageRef, float midAlphaValue, float endAlphaValue, float fadeDuration, string sceneToLoad)
     {
         yield return new WaitUntil(() => GameManager.Instance.GameIsPlaying());
 
-        crossFadeObject.SetActive(true);
+        ActivateCrossFadeObject();
 
         yield return imageRef.DOFade(midAlphaValue, fadeDuration).WaitForCompletion();
 
-        _SceneManager.Instance.LoadASceneByName(_SceneManager.Instance.CombatScene, UnityEngine.SceneManagement.LoadSceneMode.Single);
+        _SceneManager.Instance.LoadASceneByName(sceneToLoad);
 
-        yield return new WaitUntil(() => _SceneManager.Instance.IsThisSceneLoaded(_SceneManager.Instance.CombatScene));
+        yield return new WaitUntil(() => _SceneManager.Instance.IsThisSceneLoaded(_SceneManager.Instance.CombatSceneName));
 
         yield return new WaitForSeconds(fadeTransitionDuration);
         yield return imageRef.DOFade(endAlphaValue, fadeDuration).WaitForCompletion();
 
+        DesactivateCrossFadeObject();
+    }
+
+    private void ActivateCrossFadeObject()
+    {
+        crossFadeObject.SetActive(true);
+    }
+
+    private void DesactivateCrossFadeObject()
+    {
         crossFadeObject.SetActive(false);
     }
     #endregion
