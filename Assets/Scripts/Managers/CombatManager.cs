@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,10 @@ public class CombatManager : MonoBehaviour
     Image ImageRef => crossFadeObject.GetComponentInChildren<Image>();
     [SerializeField] private float fadeDuration = .75f;
     [SerializeField] private float fadeTransitionDuration = .75f;
+
+    [Space]
+    [Header("COMBAT INFORMATIONS")]
+    public List<TeamManager.Unit> unitsInCombat;
 
     #region Singleton
     public static CombatManager Instance;
@@ -47,15 +52,38 @@ public class CombatManager : MonoBehaviour
     private void EnterCombat()
     {
         StartCoroutine(FadeInCoroutine(ImageRef, 1, 0, fadeDuration, _SceneManager.Instance.CombatSceneName));
+        GetAllUnitsPresentInCombat();
+        PlayerDataManager.Instance.SavePlayerPosition();
         //Save some player informations such as position...
     }
 
     private void ExitCombat()
     {
         StartCoroutine(FadeInCoroutine(ImageRef, 1, 0, fadeDuration, _SceneManager.Instance.DefaultSceneName));
+        RemoveAllUnitsInCombat();
+        PlayerDataManager.Instance.SavePlayerPosition();
         //Restore some player informations such as position...
     }
 
+    private void GetAllUnitsPresentInCombat()
+    {
+        for (int i = 0; i < TeamManager.Instance.currentPlayerTeam.Count; i++)
+        {
+            unitsInCombat.Add(TeamManager.Instance.currentPlayerTeam[ i ]);
+        }
+
+        for (int i = 0; i < TeamManager.Instance.currentEnemyTeam.Count; i++)
+        {
+            unitsInCombat.Add(TeamManager.Instance.currentEnemyTeam [ i ]);
+        }
+    }
+
+    private void RemoveAllUnitsInCombat()
+    {
+        unitsInCombat.Clear();
+    }
+
+    #region Fade methods
     #region Summary
     /// <summary>
     /// Execute a fade transition between the current scene and the wanted scene we want to load.
@@ -94,5 +122,6 @@ public class CombatManager : MonoBehaviour
     {
         crossFadeObject.SetActive(false);
     }
+    #endregion
     #endregion
 }

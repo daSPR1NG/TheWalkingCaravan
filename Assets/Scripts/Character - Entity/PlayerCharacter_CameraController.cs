@@ -49,6 +49,7 @@ public class PlayerCharacter_CameraController : MonoBehaviour
         else
         {
             Instance = this;
+            SetCameraTarget();
         }
     }
 
@@ -83,23 +84,11 @@ public class PlayerCharacter_CameraController : MonoBehaviour
     {
         if (CameraIsLocked && targetStateManager && !targetStateManager.NavMeshAgent.hasPath)
         {
-            //Debug.Log("Following with ZQSD");
             FollowCharacter(target);
         }
-        else if (CameraIsUnlocked)
-        {
-            if (usesDirectionalArrowMovement) MoveCameraWithDirectionalArrows();
-            if (usesScreenEdgesMovement) MoveCameraOnHittingScreenEdges();
-        }
-    }
 
-    private void LateUpdate()
-    {
-        if (CameraIsLocked && targetStateManager && targetStateManager.NavMeshAgent.hasPath)
-        {
-            //Debug.Log("Following with Navmesh");
-            FollowCharacter(target);
-        }
+        if (usesDirectionalArrowMovement && CameraIsUnlocked) MoveCameraWithDirectionalArrows();
+        if (usesScreenEdgesMovement && CameraIsUnlocked) MoveCameraOnHittingScreenEdges();
     }
 
     public void FollowCharacter(Transform targetToFollow)
@@ -198,4 +187,9 @@ public class PlayerCharacter_CameraController : MonoBehaviour
         transform.position += cameraMovementSpeed * Time.fixedDeltaTime * (UtilityClass.GetMainCameraForwardDirection(0) * newPos.z + UtilityClass.GetMainCameraRightDirection(0) * newPos.x).normalized;
     }
     #endregion
+
+    private void SetCameraTarget()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 }

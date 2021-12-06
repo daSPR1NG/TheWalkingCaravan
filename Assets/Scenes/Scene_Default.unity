@@ -2695,9 +2695,10 @@ GameObject:
   - component: {fileID: 690190699}
   - component: {fileID: 690190702}
   - component: {fileID: 690190703}
+  - component: {fileID: 690190704}
   m_Layer: 6
   m_Name: Player Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2833,6 +2834,20 @@ MonoBehaviour:
   instanceValue: 5
   ressourceUICompartment: {fileID: 766967305736487307, guid: be4e602689e691348b6a60003f29e303, type: 3}
   buildingButtonsHolder: {fileID: 361790352}
+--- !u!114 &690190704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690190697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74f1a5bfda02564a96585be081c46d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCharacterTransform: {fileID: 0}
+  playerPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &698813935
 GameObject:
   m_ObjectHideFlags: 0
@@ -7161,6 +7176,7 @@ MonoBehaviour:
   crossFadeObject: {fileID: 1971977205}
   fadeDuration: 0.75
   fadeTransitionDuration: 0.75
+  unitsInCombat: []
 --- !u!4 &1635912525
 Transform:
   m_ObjectHideFlags: 0
