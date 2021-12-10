@@ -11,7 +11,7 @@ public interface IDetectable
     {
         public static void SetCursorAppearanceOnDetection(CursorType cursorType, Outline outlineComponent, bool isOutlineEnabled, string debugMessage)
         {
-            CursorHandler.Instance.SetCursorAppearance(cursorType);
+            CursorController.Instance.SetCursorAppearance(cursorType);
 
             outlineComponent.enabled = isOutlineEnabled;
 

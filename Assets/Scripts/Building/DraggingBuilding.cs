@@ -75,7 +75,7 @@ public class DraggingBuilding : MonoBehaviour
 
     private void CancelBuilding()
     {
-        CursorHandler.Instance.SetCursorAppearance(CursorType.Default);
+        CursorController.Instance.SetCursorAppearance(CursorType.Default);
         Destroy(buildingPrefab);
         buildingPrefab = null;
     }

@@ -28,7 +28,7 @@ public class CursorAppearance
     public int frameCount => cursorTextures.Count;
 }
 
-public class CursorHandler : MonoBehaviour
+public class CursorController : MonoBehaviour
 {
     [Header("APPEARANCE SETTINGS")]
     public List<CursorAppearance> cursorAppearances;
@@ -40,7 +40,7 @@ public class CursorHandler : MonoBehaviour
     public bool cursorIsLocked= false;
 
     #region Singleton
-    public static CursorHandler Instance;
+    public static CursorController Instance;
 
     private void Awake()
     {
@@ -87,7 +87,7 @@ public class CursorHandler : MonoBehaviour
 
     private void UpdateCursorAppearance()
     {
-        if (GameManager.Instance.GameIsPaused() || GameManager.Instance.IsInCombat())
+        if (!GameManager.Instance.PlayerCanUseActions())
         {
             SetCursorAppearance(CursorType.Default);
             return;

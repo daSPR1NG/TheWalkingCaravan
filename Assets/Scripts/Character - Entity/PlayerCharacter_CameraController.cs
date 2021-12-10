@@ -20,7 +20,7 @@ public class PlayerCharacter_CameraController : MonoBehaviour
     public Transform target;
     public float followingSpeed = 0.5f;
     private Vector3 offsetFromCharacter;
-    private Character_MovementHandler targetStateManager => target.GetComponent<Character_MovementHandler>();
+    private Character_MovementController targetStateManager => target.GetComponent<Character_MovementController>();
 
     [Space]
 
@@ -60,7 +60,7 @@ public class PlayerCharacter_CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.GameIsPaused() || GameManager.Instance.IsInCombat())
+        if (!GameManager.Instance.PlayerCanUseActions())
         {
             return;
         }
@@ -82,7 +82,7 @@ public class PlayerCharacter_CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (CameraIsLocked && targetStateManager && !targetStateManager.NavMeshAgent.hasPath)
+        if (CameraIsLocked && targetStateManager)
         {
             FollowCharacter(target);
         }

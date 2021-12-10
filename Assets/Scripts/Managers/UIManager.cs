@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
     }
 
     #region General methods
-    private void DisplayThisUIComponent(GameObject component)
+    public void DisplayThisUIComponent(GameObject component)
     {
         if (component is not null)
         {
@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void HideThisUIComponent(GameObject component)
+    public void HideThisUIComponent(GameObject component)
     {
         if (component is not null)
         {

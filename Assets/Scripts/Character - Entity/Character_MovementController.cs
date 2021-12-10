@@ -5,7 +5,7 @@ namespace Khynan_Survival
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Rigidbody))]
-    public class Character_MovementHandler : StateManager
+    public class Character_MovementController : StateManager
     {
         [Header("MOVEMENT SETTINGS")]
         public float MovementSpeed = 5f;
@@ -29,7 +29,7 @@ namespace Khynan_Survival
 
         private void ProcessZQSDMovement()
         {
-            if (GameManager.Instance.GameIsPaused() || GameManager.Instance.IsInCombat())
+            if (!GameManager.Instance.PlayerCanUseActions())
             {
                 return;
             }

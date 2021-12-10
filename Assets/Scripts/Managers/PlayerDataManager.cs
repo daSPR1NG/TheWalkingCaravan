@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerDataManager : MonoBehaviour
 {
     [Header("PLAYER")]
-    public Transform playerCharacterTransform;
+    private Transform playerCharacterTransform;
 
     [Space]
     [Header("PLAYER INFORMATIONS")]
@@ -29,6 +29,7 @@ public class PlayerDataManager : MonoBehaviour
     }
     #endregion
 
+    #region Player position
     public void SavePlayerPosition()
     {
         playerPosition = GetCharacterPosition(playerCharacterTransform);
@@ -37,7 +38,12 @@ public class PlayerDataManager : MonoBehaviour
 
     public Vector3 GetCharacterPosition(Transform observedTransform)
     {
-        return observedTransform.position;
+        if(playerPosition == Vector3.zero)
+        {
+            return observedTransform.position;
+        }
+
+        return playerPosition;
     }
 
     public void SetCharacterPosition(Transform observedTransform, Vector3 newPos)
@@ -45,9 +51,25 @@ public class PlayerDataManager : MonoBehaviour
         SetPlayerCharacterTransform();
         observedTransform.position = newPos;
     }
+    #endregion
+
+    public Transform GetPlayerCharacterTransform()
+    {
+        return playerCharacterTransform;
+    }
 
     private void SetPlayerCharacterTransform()
     {
         playerCharacterTransform = transform;
+    }
+
+    public bool PlayerCharacterIsActive()
+    {
+        if (playerCharacterTransform.gameObject.activeInHierarchy)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

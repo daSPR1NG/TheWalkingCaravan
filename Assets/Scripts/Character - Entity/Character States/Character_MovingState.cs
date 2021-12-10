@@ -19,7 +19,7 @@ public class Character_MovingState : BasicState
     public override void ProcessState(StateManager stateManager)
     {
         InteractionHandler cursorDetection = stateManager.GetComponent<InteractionHandler>();
-        Character_MovementHandler character_MovementHandler = stateManager.GetComponent<Character_MovementHandler>();
+        Character_MovementController character_MovementHandler = stateManager.GetComponent<Character_MovementController>();
 
         if (character_MovementHandler.DirectionToMove == Vector3.zero && !cursorDetection.HasATarget)
         {
@@ -45,7 +45,7 @@ public class Character_MovingState : BasicState
     //    animator.SetFloat(animationFloatName, moveSpeed, smoothTime, Time.deltaTime);
     //}
 
-    private void UpdateTransformRotation(Character_MovementHandler stateManager, Transform _transform)
+    private void UpdateTransformRotation(Character_MovementController stateManager, Transform _transform)
     {
         //This operation/conversion helps us rotate the character in the right direction relative to the movement direction and the camera's orientation.
         Quaternion targetRotation = Quaternion.LookRotation(

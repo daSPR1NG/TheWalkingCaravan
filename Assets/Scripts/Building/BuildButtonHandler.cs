@@ -101,7 +101,7 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
 
         Debug.Log("Click on this button");
 
-        CursorHandler.Instance.SetCursorAppearance(CursorType.Building);
+        CursorController.Instance.SetCursorAppearance(CursorType.Building);
         InstantiateBuildingAtCursorPos();
 
         DraggingBuilding.Instance.SetBuildingPrefab(buildingInstance, associatedBuilding);

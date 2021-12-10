@@ -29,7 +29,7 @@ public class InteractionHandler : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.GameIsPaused() || GameManager.Instance.IsInCombat())
+        if (!GameManager.Instance.PlayerCanUseActions())
         {
             return;
         }

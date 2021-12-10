@@ -93,6 +93,17 @@ public class GameManager : MonoBehaviour
         SetTimeScaleTo(1);
     }
 
+    public bool PlayerCanUseActions()
+    {
+        if (GameIsPaused() || IsInCombat() 
+            || !PlayerDataManager.Instance.PlayerCharacterIsActive())
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public void QuitTheGame()
     {
         UtilityClass.DebugMessage("QUIT THE GAME !");
