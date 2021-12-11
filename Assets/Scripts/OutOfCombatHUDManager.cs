@@ -16,6 +16,8 @@ public class OutOfCombatHUDManager : MonoBehaviour
         CombatHUDManager.OnTransition -= ToggleThisUI;
     }
 
+    private void Start() => ToggleThisUI();
+
     private void ToggleThisUI()
     {
         if (GameManager.Instance.IsInCombat() && contentObject.activeInHierarchy)
