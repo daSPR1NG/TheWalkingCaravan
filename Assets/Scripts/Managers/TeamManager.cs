@@ -13,6 +13,14 @@ public enum UnitType
     Priest,
 }
 
+public enum Team
+{
+    Unassigned,
+    Ally,
+    Ennemy,
+    Neutral,
+}
+
 public class TeamManager : MonoBehaviour
 {
     [Header("PLAYER TEAM")]
@@ -46,8 +54,16 @@ public class TeamManager : MonoBehaviour
     {
         public string unitName;
         public int unitID = 0;
+        public Team unitTeam = Team.Unassigned;
         public UnitType unitType = UnitType.Unassigned;
         public GameObject prefab;
+        public List<Competences> unitCompetences;
+    }
+
+    [Serializable]
+    public class Competences
+    {
+
     }
 
     private void OnEnable()

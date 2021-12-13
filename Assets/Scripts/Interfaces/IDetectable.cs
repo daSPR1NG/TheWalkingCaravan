@@ -9,7 +9,7 @@ public interface IDetectable
 
     public static class IDetectableExtension
     {
-        public static void SetCursorAppearanceOnDetection(CursorType cursorType, Outline outlineComponent, bool isOutlineEnabled, string debugMessage)
+        public static void SetCursorAppearanceOnDetection(CursorType cursorType, OutlineModule outlineComponent, bool isOutlineEnabled, string debugMessage)
         {
             CursorController.Instance.SetCursorAppearance(cursorType);
 

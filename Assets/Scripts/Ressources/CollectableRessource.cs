@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-[RequireComponent(typeof(Outline))]
+[RequireComponent(typeof(OutlineModule))]
 public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
 {
     [Header("INTERACTION SETTINGS")]
@@ -24,7 +24,7 @@ public class CollectableRessource : MonoBehaviour, IInteractive, IDetectable
     private Coroutine interactionCoroutine;
 
     #region Components
-    private Outline OutlineComponent => GetComponent<Outline>();
+    private OutlineModule OutlineComponent => GetComponent<OutlineModule>();
     #endregion
 
     private void Start()
