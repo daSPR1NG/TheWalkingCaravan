@@ -48,33 +48,6 @@ public class TeamManager : MonoBehaviour
     }
     #endregion
 
-    //This might/should become a scriptable object
-    [Serializable]
-    public class Unit
-    {
-        public string name;
-        public int ID = 0;
-        public Sprite icon;
-        public int initiative = 50;
-
-        [Space]
-
-        public Team team = Team.Unassigned;
-        public UnitType type = UnitType.Unassigned;
-
-        [Space]
-
-        public GameObject prefab;
-        public List<Competences> competences;
-    }
-
-    //This might/should become a scriptable object
-    [Serializable]
-    public class Competences
-    {
-        public Sprite icon;
-    }
-
     private void OnEnable()
     {
         ArenaManager.OnEnteringArena += PositionTeamUnits;
@@ -189,22 +162,4 @@ public class TeamManager : MonoBehaviour
 
         return null;
     }
-
-    #region Editor
-    //Temporary
-    private void OnValidate()
-    {
-        for (int i = 0; i < currentPlayerTeam.Count; i++)
-        {
-            //currentPlayerTeam [ i ].name = currentPlayerTeam [ i ].type.ToString();
-            currentEnemyTeam [ i ].team = Team.Ally;
-        }
-
-        for (int i = 0; i < currentEnemyTeam.Count; i++)
-        {
-            //currentEnemyTeam [ i ].name = currentEnemyTeam [ i ].type.ToString();
-            currentEnemyTeam [ i ].team = Team.Ennemy;
-        }
-    }
-    #endregion
 }

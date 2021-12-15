@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Buildings", fileName = "Building_SO_", order = 0)]
-public class BuildingSO : ScriptableObject
+[CreateAssetMenu(menuName = "ScriptableObjects/Building", fileName = "Building_SO_", order = 0)]
+public class Building : ScriptableObject
 {
     public string buildingName;
     public Sprite buildingIcon;

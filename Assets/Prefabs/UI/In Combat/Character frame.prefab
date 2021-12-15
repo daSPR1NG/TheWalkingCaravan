@@ -162,8 +162,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2053118323191654463}
   - component: {fileID: 2053118323191654462}
-  - component: {fileID: 7822650211136433468}
   - component: {fileID: 8690505890954425714}
+  - component: {fileID: 7554368755322824722}
   - component: {fileID: 6487769717425729421}
   m_Layer: 5
   m_Name: Character frame
@@ -203,28 +203,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053118323191654456}
   m_CullTransparentMesh: 1
---- !u!114 &7822650211136433468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053118323191654456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c8a043ce1271dd49b3bf957f756e1a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitRef:
-    name: 
-    ID: 0
-    icon: {fileID: 0}
-    initiative: 50
-    team: 0
-    type: 0
-    prefab: {fileID: 0}
-    competences: []
-  iconImage: {fileID: 7162082981759233635}
 --- !u!114 &8690505890954425714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +233,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7554368755322824722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053118323191654456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f6ff227f2470b4480763ba161a6e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitRef: {fileID: 0}
+  iconImage: {fileID: 7162082981759233635}
 --- !u!114 &6487769717425729421
 MonoBehaviour:
   m_ObjectHideFlags: 0

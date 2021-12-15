@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public BuildingSO associatedBuilding;
+    public Building associatedBuilding;
     private GameObject buildingInstance;
     private bool canBeBuilt = false;
 
@@ -35,7 +35,7 @@ public class BuildButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerE
 
         if (associatedBuilding.neededRessourcesToBuild.Count == 0) return;
 
-        foreach (BuildingSO.NeededRessourcesDatas thisNeededRessourceData in associatedBuilding.neededRessourcesToBuild)
+        foreach (Building.NeededRessourcesDatas thisNeededRessourceData in associatedBuilding.neededRessourcesToBuild)
         {
             if (thisNeededRessourceData.neededRessourceValue == RessourcesHandler.Instance.GetThisRessource(thisNeededRessourceData.ressourceType).CurrentValue)
             {

@@ -37,7 +37,7 @@ public class CompetencesCompartmentManager : MonoBehaviour
         TurnOrderManager.OnTurnEnded -= SetCompetencesUICompartment;
     }
 
-    void CreateCompetencesUI(TeamManager.Unit unit)
+    void CreateCompetencesUI(Unit unit)
     {
         Debug.Log(unit.competences.Count);
 
@@ -65,7 +65,7 @@ public class CompetencesCompartmentManager : MonoBehaviour
 
     private void SetCompetencesUICompartment()
     {
-        TeamManager.Unit unitRef = TurnOrderManager.Instance.GetCurrentlyPlayingUnit();
+        Unit unitRef = TurnOrderManager.Instance.GetCurrentlyPlayingUnit();
 
         DeleteAllCreatedCompetences();
 

@@ -1,12 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-public class GeneralCombatInfosHandler : MonoBehaviour
+public class GeneralCombatInfosUIHandler : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI characterNameText;
     private float timeValue = 0.0f;
-    private TeamManager.Unit currentPlayingUnitRef;
+    private Unit currentPlayingUnitRef;
 
     private void OnEnable()
     {
@@ -40,6 +40,6 @@ public class GeneralCombatInfosHandler : MonoBehaviour
     {
         currentPlayingUnitRef = TurnOrderManager.Instance.GetCurrentlyPlayingUnit();
 
-        characterNameText.SetText(" - Tour de " + currentPlayingUnitRef.name + " .");
+        characterNameText.SetText(" - Tour de " + currentPlayingUnitRef.unitName + " .");
     }
 }

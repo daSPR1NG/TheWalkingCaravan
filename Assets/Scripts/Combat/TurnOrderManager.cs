@@ -12,7 +12,7 @@ public class TurnOrderManager : MonoBehaviour
 
     //Debug
     public int currentTurnValue = 0;
-    public TeamManager.Unit currentPlayingUnit;
+    public Unit currentPlayingUnit;
 
     [Header("UI | Unit Competences")]
     [SerializeField] private Transform characterFramesParent;
@@ -64,7 +64,7 @@ public class TurnOrderManager : MonoBehaviour
         {
             GameObject newInstance = Instantiate(characterFramePrefab, characterFramesParent);
 
-            CharacterFrameHandler characterFrameHandlerRef = newInstance.GetComponent<CharacterFrameHandler>();
+            CharacterFrameUIHandler characterFrameHandlerRef = newInstance.GetComponent<CharacterFrameUIHandler>();
 
             characterFrameHandlerRef.SetUnitRef(CombatManager.Instance.unitsInCombat [ i ]);
 
@@ -78,16 +78,16 @@ public class TurnOrderManager : MonoBehaviour
         Transform firstChild = characterFramesParent.GetChild(0);
         firstChild.SetAsLastSibling();
 
-        CharacterFrameHandler characterFrameHandlerRef = characterFramesParent.GetChild(0).GetComponent<CharacterFrameHandler>();
+        CharacterFrameUIHandler characterFrameHandlerRef = characterFramesParent.GetChild(0).GetComponent<CharacterFrameUIHandler>();
         SetCurrentPlayingUnit(characterFrameHandlerRef.unitRef);
     }
 
-    private void SetCurrentPlayingUnit(TeamManager.Unit unit)
+    private void SetCurrentPlayingUnit(Unit unit)
     {
         currentPlayingUnit = unit;
     }
 
-    public TeamManager.Unit GetCurrentlyPlayingUnit()
+    public Unit GetCurrentlyPlayingUnit()
     {
         return currentPlayingUnit;
     }
@@ -104,7 +104,7 @@ public class TurnOrderManager : MonoBehaviour
 
         CreateCharacterFrame(characterInCombat);
 
-        SetCurrentPlayingUnit(characterFramesParent.GetChild(0).GetComponent<CharacterFrameHandler>().unitRef);
+        SetCurrentPlayingUnit(characterFramesParent.GetChild(0).GetComponent<CharacterFrameUIHandler>().unitRef);
 
         OnTurnBegun?.Invoke();
     }

@@ -7,7 +7,7 @@ public class CombatManager : MonoBehaviour
 {
     [Header("COMBAT INFORMATIONS")]
     public int combatAmount = 2;
-    [Space] public List<TeamManager.Unit> unitsInCombat;
+    [Space] public List<Unit> unitsInCombat;
 
     #region Singleton
     public static CombatManager Instance;

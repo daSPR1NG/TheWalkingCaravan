@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterFrameHandler : MonoBehaviour
+public class CharacterFrameUIHandler : MonoBehaviour
 {
     //Debug set to private
-    public TeamManager.Unit unitRef;
+    public Unit unitRef;
     public Image iconImage;
 
-    public void SetUnitRef(TeamManager.Unit newUnit)
+    public void SetUnitRef(Unit newUnit)
     {
         unitRef = newUnit;
         SetCharacterFrameIcon(newUnit.icon);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DraggingBuilding : MonoBehaviour
 {
     public GameObject buildingPrefab;
-    public BuildingSO buildingScript;
+    public Building buildingScript;
     public LayerMask groundLayer;
 
     #region Singleton
@@ -38,7 +38,7 @@ public class DraggingBuilding : MonoBehaviour
         }
     }
 
-    public void SetBuildingPrefab(GameObject prefab, BuildingSO buildingScript)
+    public void SetBuildingPrefab(GameObject prefab, Building buildingScript)
     {
         buildingPrefab = prefab;
         this.buildingScript = buildingScript;
@@ -64,7 +64,7 @@ public class DraggingBuilding : MonoBehaviour
 
     private void RemoveRessourcesFromPlayerAfterBuilding()
     {
-        foreach (BuildingSO.NeededRessourcesDatas thisNeededRessourceData in buildingScript.neededRessourcesToBuild)
+        foreach (Building.NeededRessourcesDatas thisNeededRessourceData in buildingScript.neededRessourcesToBuild)
         {
             if (thisNeededRessourceData.ressourceType == RessourcesHandler.Instance.GetThisRessource(thisNeededRessourceData.ressourceType).ressourceType)
             {
