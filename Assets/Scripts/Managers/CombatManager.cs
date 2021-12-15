@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
     [Header("COMBAT INFORMATIONS")]
-    public List<TeamManager.Unit> unitsInCombat;
+    public int combatAmount = 2;
+    [Space] public List<TeamManager.Unit> unitsInCombat;
 
     #region Singleton
     public static CombatManager Instance;
@@ -91,6 +93,8 @@ public class CombatManager : MonoBehaviour
         {
             unitsInCombat.Add(TeamManager.Instance.currentEnemyTeam [ i ]);
         }
+
+        unitsInCombat = unitsInCombat.OrderByDescending(unitsInCombat => unitsInCombat.initiative).ToList();
     }
 
     private void RemoveAllUnitsInCombat()

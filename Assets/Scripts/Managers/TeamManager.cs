@@ -52,18 +52,27 @@ public class TeamManager : MonoBehaviour
     [Serializable]
     public class Unit
     {
-        public string unitName;
-        public int unitID = 0;
-        public Team unitTeam = Team.Unassigned;
-        public UnitType unitType = UnitType.Unassigned;
+        public string name;
+        public int ID = 0;
+        public Sprite icon;
+        public int initiative = 50;
+
+        [Space]
+
+        public Team team = Team.Unassigned;
+        public UnitType type = UnitType.Unassigned;
+
+        [Space]
+
         public GameObject prefab;
-        public List<Competences> unitCompetences;
+        public List<Competences> competences;
     }
 
+    //This might/should become a scriptable object
     [Serializable]
     public class Competences
     {
-
+        public Sprite icon;
     }
 
     private void OnEnable()
@@ -172,7 +181,7 @@ public class TeamManager : MonoBehaviour
     {
         for (int i = 0; i < team.Count; i++)
         {
-            if (team [ i ].unitID == unitID)
+            if (team [ i ].ID == unitID)
             {
                 return team [ i ];
             }
@@ -187,12 +196,14 @@ public class TeamManager : MonoBehaviour
     {
         for (int i = 0; i < currentPlayerTeam.Count; i++)
         {
-            currentPlayerTeam [ i ].unitName = currentPlayerTeam [ i ].unitType.ToString();
+            //currentPlayerTeam [ i ].name = currentPlayerTeam [ i ].type.ToString();
+            currentEnemyTeam [ i ].team = Team.Ally;
         }
 
         for (int i = 0; i < currentEnemyTeam.Count; i++)
         {
-            currentEnemyTeam [ i ].unitName = currentEnemyTeam [ i ].unitType.ToString();
+            //currentEnemyTeam [ i ].name = currentEnemyTeam [ i ].type.ToString();
+            currentEnemyTeam [ i ].team = Team.Ennemy;
         }
     }
     #endregion

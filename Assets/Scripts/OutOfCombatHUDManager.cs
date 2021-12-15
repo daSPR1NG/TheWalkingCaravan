@@ -8,12 +8,12 @@ public class OutOfCombatHUDManager : MonoBehaviour
 
     private void OnEnable()
     {
-        CombatHUDManager.OnTransition += ToggleThisUI;
+        FadingManager.OnTransition += ToggleThisUI;
     }
 
     private void OnDisable()
     {
-        CombatHUDManager.OnTransition -= ToggleThisUI;
+        FadingManager.OnTransition -= ToggleThisUI;
     }
 
     private void Start() => ToggleThisUI();
