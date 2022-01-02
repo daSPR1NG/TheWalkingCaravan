@@ -38,7 +38,7 @@ public class GeneralCombatInfosUIHandler : MonoBehaviour
 
     void UpdateCurrentPlayingCharacterName()
     {
-        currentPlayingUnitRef = TurnOrderManager.Instance.GetCurrentlyPlayingUnit();
+        currentPlayingUnitRef = TurnOrderManager.Instance.GetCurrentPlayingUnit();
 
         characterNameText.SetText(" - Tour de " + currentPlayingUnitRef.unitName + " .");
     }

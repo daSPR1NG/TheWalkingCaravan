@@ -5,9 +5,9 @@ public class StateManager : MonoBehaviour
 {
     #region Character States
     private BasicState currentState;
-    public Character_IdleState IdleState = new Character_IdleState();
-    public Character_MovingState MovingState = new Character_MovingState();
-    public Character_InteractionState InteractionState = new Character_InteractionState();
+    public Character_IdleState IdleState = new();
+    public Character_MovingState MovingState = new();
+    public Character_InteractionState InteractionState = new();
     [HideInInspector] public bool CharacterIsMoving = false;
 
     public BasicState CurrentState { get => currentState; set => currentState = value; }

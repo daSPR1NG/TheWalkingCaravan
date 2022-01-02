@@ -5,7 +5,7 @@ namespace Khynan_Survival
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Rigidbody))]
-    public class Character_MovementController : StateManager
+    public class Player_MovementController : StateManager
     {
         [Header("MOVEMENT SETTINGS")]
         public float MovementSpeed = 5f;
@@ -21,7 +21,7 @@ namespace Khynan_Survival
 
         private void Start()
         {
-            SetCharacterSpeedTo(10f);
+            SetCharacterSpeed(10f);
             SetDefaultStateAtStart(IdleState);
         }
 
@@ -65,14 +65,14 @@ namespace Khynan_Survival
 
             if (DirectionToMove != Vector3.zero)
             {
-                CheckInteractionStateAndResetIt();
+                ResetInteractionState();
 
                 UtilityClass.ResetAgentDestination(NavMeshAgent);
                 SwitchState(MovingState);
             }
         }
 
-        private void CheckInteractionStateAndResetIt()
+        private void ResetInteractionState()
         {
             InteractionHandler interactionHandler = GetComponent<InteractionHandler>();
 
@@ -82,7 +82,7 @@ namespace Khynan_Survival
             }
         }
 
-        public void SetCharacterSpeedTo(float newSpeed)
+        public void SetCharacterSpeed(float newSpeed)
         {
             MovementSpeed = newSpeed;
             NavMeshAgent.speed = newSpeed;

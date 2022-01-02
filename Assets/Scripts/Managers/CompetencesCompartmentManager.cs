@@ -65,7 +65,7 @@ public class CompetencesCompartmentManager : MonoBehaviour
 
     private void SetCompetencesUICompartment()
     {
-        Unit unitRef = TurnOrderManager.Instance.GetCurrentlyPlayingUnit();
+        Unit unitRef = TurnOrderManager.Instance.GetCurrentPlayingUnit();
 
         DeleteAllCreatedCompetences();
 

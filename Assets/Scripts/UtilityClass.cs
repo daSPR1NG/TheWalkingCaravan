@@ -155,7 +155,7 @@ public static class UtilityClass
     {
         navMeshAgent.SetDestination(target);
 
-        Character_MovementController stateManager = navMeshAgent.GetComponent<Character_MovementController>();
+        Player_MovementController stateManager = navMeshAgent.GetComponent<Player_MovementController>();
 
         if (stateManager is not null)
         {

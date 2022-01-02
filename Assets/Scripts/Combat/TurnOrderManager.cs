@@ -87,7 +87,7 @@ public class TurnOrderManager : MonoBehaviour
         currentPlayingUnit = unit;
     }
 
-    public Unit GetCurrentlyPlayingUnit()
+    public Unit GetCurrentPlayingUnit()
     {
         return currentPlayingUnit;
     }
@@ -99,7 +99,6 @@ public class TurnOrderManager : MonoBehaviour
 
     void InitTurnOrder()
     {
-        //Add enough character frames
         int characterInCombat = CombatManager.Instance.unitsInCombat.Count;
 
         CreateCharacterFrame(characterInCombat);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum CameraLockState { Locked, Unlocked }
 
-public class PlayerCharacter_CameraController : MonoBehaviour
+public class Player_CameraController : MonoBehaviour
 {
     [Header("CAMERA SETTINGS")]
     [SerializeField] private CameraLockState cameraLockState;
@@ -20,7 +20,7 @@ public class PlayerCharacter_CameraController : MonoBehaviour
     public Transform target;
     public float followingSpeed = 0.5f;
     private Vector3 offsetFromCharacter;
-    private Character_MovementController targetStateManager => target.GetComponent<Character_MovementController>();
+    private Player_MovementController TargetStateManager => target.GetComponent<Player_MovementController>();
 
     [Space]
 
@@ -38,7 +38,7 @@ public class PlayerCharacter_CameraController : MonoBehaviour
     public KeyCode ChangeCameraLockStateInput { get => changeCameraLockStateInput; }
     public KeyCode CameraFocusOnTargetInput { get => cameraFocusOnTargetInput; }
 
-    public static PlayerCharacter_CameraController Instance;
+    public static Player_CameraController Instance;
 
     private void Awake()
     {
@@ -82,7 +82,7 @@ public class PlayerCharacter_CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (CameraIsLocked && targetStateManager)
+        if (CameraIsLocked && TargetStateManager is not null)
         {
             FollowCharacter(target);
         }
